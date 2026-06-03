@@ -273,6 +273,82 @@
 
   footer { text-align: center; padding: 8px 20px 90px; color: var(--ink-soft); font-size: 13px; }
   footer .brand { color: var(--gold); font-weight: 700; }
+
+  /* ============================================================
+     現代潮流撞色 改版（粗黑框 + 硬陰影 + 鮮豔撞色 + 粗黑體）
+     ============================================================ */
+  :root{
+    --ink:#141414; --ink-soft:#5b5b5b; --paper:#FBF6EE; --card:#ffffff; --line:#141414;
+    --gold:#FF2D78; --gold-soft:#FFC93C;
+    --c-orange:#FF5C2B; --c-pink:#FF2D78; --c-purple:#6C3CE0; --c-yellow:#FFC93C; --c-teal:#13C2A6;
+  }
+  body{
+    background:
+      radial-gradient(circle at 92% -2%, rgba(108,60,224,.16), transparent 36%),
+      radial-gradient(circle at 4% 10%, rgba(255,92,43,.18), transparent 32%),
+      var(--paper);
+  }
+  /* 所有標題改粗黑無襯線 */
+  .serif{ font-family:"Noto Sans TC",sans-serif !important; font-weight:900 !important; letter-spacing:0 !important; }
+
+  .topbar{ padding-top:30px; }
+  .topbar .eyebrow{ color:var(--c-purple); font-weight:900; }
+  .topbar h1{ font-size:34px; }
+  .topbar h1 .accent{ color:#fff; background:var(--c-pink); padding:0 12px; border-radius:10px;
+    box-shadow:3px 3px 0 var(--ink); display:inline-block; transform:rotate(-2deg); }
+  .intro .divider{ background:var(--ink); height:4px; width:64px; }
+
+  /* 今日精選卡：亮黃底 + 粗黑框 + 硬陰影 */
+  .today-card{ background:var(--c-yellow); border:3px solid var(--ink); border-radius:20px; box-shadow:6px 6px 0 var(--ink); }
+  .today-card .tag{ background:var(--ink); color:#fff; border-radius:8px; letter-spacing:1px; }
+  .today-info h2{ font-weight:900; }
+  .today-info .date,.today-info .reason{ color:#3a3a3a; }
+
+  /* 本命色鉤子卡：電光紫底 + 黃字 */
+  .destiny-gate{ background:var(--c-purple); border:3px solid var(--ink); border-radius:20px; box-shadow:6px 6px 0 var(--ink); }
+  .destiny-gate::after{ display:none; }
+  .destiny-gate .dg-eyebrow{ color:var(--c-yellow); }
+  .destiny-gate .dg-btn{ background:var(--c-yellow); color:var(--ink); border:2.5px solid var(--ink); border-radius:12px; box-shadow:4px 4px 0 var(--ink); }
+  .destiny-gate .dg-btn:active{ transform:translate(4px,4px); box-shadow:0 0 0 var(--ink); }
+  .destiny-result{ background:#fff; border:3px solid var(--ink); border-radius:20px; box-shadow:6px 6px 0 var(--ink); }
+  .destiny-result .dr-eyebrow{ color:var(--c-purple); }
+  .destiny-result h4{ font-weight:900; }
+
+  /* 月曆格：粗黑框 + 硬陰影；今日格青色撞色 */
+  .section-title{ font-weight:900; }
+  .day{ border:2.5px solid var(--ink); border-radius:14px; box-shadow:3px 3px 0 var(--ink); }
+  .day:active{ transform:translate(3px,3px); box-shadow:0 0 0 var(--ink); }
+  .day.is-today{ background:var(--c-teal); }
+  .day .star{ color:var(--ink); background:var(--c-yellow); padding:1px 6px; border-radius:6px; border:1.5px solid var(--ink); top:6px; right:6px; }
+  .day .cname{ font-weight:900; }
+
+  /* 彈窗 */
+  .modal{ border:3px solid var(--ink); border-radius:24px 24px 0 0; box-shadow:0 -6px 0 var(--ink); }
+  .modal-head h3{ font-weight:900; }
+  .modal-head .close{ background:var(--c-pink); color:#fff; border:2px solid var(--ink); box-shadow:2px 2px 0 var(--ink); }
+  .modal-head .match{ color:#3a3a3a; }
+  .field .label{ color:var(--c-purple); }
+  .field.reason .val{ border-left:4px solid var(--c-pink); background:#fff6fa; }
+
+  /* 表單 */
+  .bday-row select,.email-row input{ border:2px solid var(--ink); border-radius:10px; background:#fff; }
+  .gender-row .g{ border:2px solid var(--ink); border-radius:10px; background:#fff; }
+  .gender-row .g.sel{ background:var(--c-yellow); border-color:var(--ink); color:var(--ink); font-weight:900; box-shadow:2px 2px 0 var(--ink); }
+  .submit-btn{ background:var(--c-pink); color:#fff; border:2.5px solid var(--ink); border-radius:12px; box-shadow:4px 4px 0 var(--ink); }
+  .submit-btn:active{ transform:translate(4px,4px); box-shadow:0 0 0 var(--ink); }
+  .submit-btn:disabled{ opacity:.4; }
+
+  /* 揭曉 */
+  .reveal h3{ font-weight:900; }
+  .reveal .r-eyebrow{ color:var(--c-purple); }
+  .reveal .r-desc{ border-left:4px solid var(--c-pink); background:#fff6fa; }
+  .reveal .r-noble{ border:2px solid var(--ink); border-radius:14px; background:#f4f1ff; }
+
+  /* 音樂鈕 / 封面提示 / footer */
+  .music-btn{ border:2.5px solid var(--ink); box-shadow:3px 3px 0 var(--ink); background:var(--c-yellow); }
+  .music-btn:active{ transform:translate(3px,3px); box-shadow:0 0 0 var(--ink); }
+  .enter-hint .pill{ background:var(--c-pink); border:2px solid #fff; }
+  footer .brand{ color:var(--c-pink); }
 </style>
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 </head>
@@ -387,11 +463,9 @@ function destinyByBirthday(year){
   return { zodiac: z, element: el, ...f };
 }
 
-/* 淺色圓點補細邊框，避免在白底上看不見 */
+/* 圓點：扁平 + 粗黑邊 + 硬陰影（潮流撞色風） */
 function swatchStyle(hex){
-  const light = ["#FFFFFF","#FBF4E4","#E8EBED","#F5E050","#D9C9A8","#E6D5B8","#87CEEB","#C7CCD1","#D4AF7A","#C3B091","#FF9E80","#E8A0B0"].includes(hex.toUpperCase());
-  const ring = light ? "0 0 0 1px #e2d9c4 inset," : "";
-  return `background:${hex};box-shadow:${ring}inset 0 0 0 3px rgba(255,255,255,.6),0 6px 14px -6px rgba(0,0,0,.28);`;
+  return `background:${hex};border:2.5px solid #141414;box-shadow:3px 3px 0 #141414;`;
 }
 
 /* ====== 狀態：是否已填生日解鎖 ====== */
