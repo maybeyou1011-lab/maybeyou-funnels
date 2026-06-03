@@ -713,14 +713,23 @@ function showJoinPrompt(){
     </div>
     <div class="reveal">
       <div class="r-desc" style="border-left-color:#06c755; background:#eefaf0;">
-        加入「鷹桃貼身小秘書」就能：<br>
+        留下 Email ＋ 加入「鷹桃貼身小秘書」就能：<br>
         ① 免費測你的本命幸運色<br>
         ② 每天看今日幸運穿搭<br>
-        ③ 每週領完整一週幸運曆
+        ③ 每月幸運曆直接寄到你信箱
       </div>
-      <button class="submit-btn" style="background:#06c755;" onclick="goToLine()">加入 LINE · 解鎖幸運曆 →</button>
+      <div class="email-row"><input id="joinEmail" type="email" inputmode="email" autocomplete="email" placeholder="你的 Email（領每月幸運曆）" /></div>
+      <button class="submit-btn" style="background:#06c755;" id="joinBtn">加入 LINE · 解鎖幸運曆 →</button>
       <div class="form-note" style="margin-top:14px"><a href="#" onclick="closeModal();return false;" style="color:var(--ink-soft);text-decoration:underline;">先看看今天的</a></div>
     </div>`;
+  document.getElementById("joinBtn").addEventListener("click", () => {
+    const email = document.getElementById("joinEmail").value.trim();
+    // 有填且格式對 → 先把 Email 存進名單(投廣用)，再去加 LINE；沒填也不擋
+    if (isEmail(email)) {
+      sendLead({ topic: CONFIG.TOPIC, email: email, source: "3day-public", submittedAt: new Date().toISOString() });
+    }
+    goToLine();
+  });
   openModal();
 }
 overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
