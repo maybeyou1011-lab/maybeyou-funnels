@@ -413,10 +413,10 @@ function weeksUnlocked(){
   const w = parseInt(new URLSearchParams(location.search).get("w") || "", 10);
   return (w && w > 0) ? w : 1;
 }
-/* 沒填生日：只試看到隔天；填了生日：解鎖到第 N 週（= 前 7×N 天） */
+/* 從 LINE 連結進來(?w=N) → 解鎖到第 N 週；社群冷流量(沒帶 w) → 只看得到今天，其餘要加 LINE 解鎖 */
+function cameFromLine(){ return new URLSearchParams(location.search).has("w"); }
 function maxView(){
-  if (!profile) return Math.min(todayN + 1, 30);
-  return Math.min(7 * weeksUnlocked(), 30);
+  return cameFromLine() ? Math.min(7 * weeksUnlocked(), 30) : todayN;
 }
 /* 回 LINE 跟鷹桃小秘書領下一週 */
 function goToLine(){
@@ -441,29 +441,15 @@ document.getElementById("todayCard").addEventListener("click", () => openDayModa
 /* ---- 本命招財色區塊（依是否解鎖切換）---- */
 function renderDestiny(){
   const box = document.getElementById("destinyWrap");
-  if (profile) {
-    const d = destinyByBirthday(profile.year);
-    box.innerHTML = `
-      <div class="destiny-result" id="destinyResult">
-        <div class="dr-swatch" style="${swatchStyle(d.hex)}"></div>
-        <div>
-          <div class="dr-eyebrow">你的本命招財色 · ${d.zodiac}（${d.element}）</div>
-          <h4>${d.color}</h4>
-          <div class="dr-sub">貴人色：${d.noble}　·　點看完整解讀</div>
-        </div>
-      </div>`;
-    document.getElementById("destinyResult").addEventListener("click", () => openRevealModal(d, false));
-  } else {
-    box.innerHTML = `
-      <div class="destiny-gate">
-        <div class="dg-eyebrow">✦ 命中註定的招財色 ✦</div>
-        <h3>你的「本命招財色」是哪一色？</h3>
-        <p>每個人天生就有一個專屬招財色<br>輸入生日，30 秒測出你的本命色</p>
-        <button class="dg-btn" id="gateBtn">免費測我的本命招財色 →</button>
-        <div class="dg-foot">測完解鎖這週每日招財穿搭 🔓</div>
-      </div>`;
-    document.getElementById("gateBtn").addEventListener("click", openFormModal);
-  }
+  box.innerHTML = `
+    <div class="destiny-gate">
+      <div class="dg-eyebrow">✦ 命中註定的招財色 ✦</div>
+      <h3>你的「本命招財色」是哪一色？</h3>
+      <p>加入鷹桃貼身小秘書，免費測你的專屬本命招財色<br>還能每週領完整招財穿搭曆</p>
+      <button class="dg-btn" id="gateBtn">加 LINE 解鎖完整招財曆 →</button>
+      <div class="dg-foot">點下去加入「鷹桃貼身小秘書」🔓</div>
+    </div>`;
+  document.getElementById("gateBtn").addEventListener("click", goToLine);
 }
 
 /* ---- 月曆網格 ---- */
@@ -481,9 +467,8 @@ function renderGrid(){
         <div class="wk">${item.wk}</div>
         <div class="swatch" style="${swatchStyle(item.hex)}"></div>
         <div class="cname">？？？</div>
-        <div class="lock"><span class="ico">🔒</span><span>${profile ? "回 LINE 領下一週" : "填生日解鎖"}</span></div>`;
-      // 沒填生日 → 引導填生日；已填 → 引導回 LINE 跟小秘書領下一週
-      el.addEventListener("click", profile ? goToLine : openFormModal);
+        <div class="lock"><span class="ico">🔒</span><span>加 LINE 解鎖</span></div>`;
+      el.addEventListener("click", goToLine);   // 點鎖住的日子 → 跳加入 LINE
     } else {
       el.innerHTML = `
         ${item.d === todayN ? '<span class="star">★ 今日</span>' : ''}
@@ -495,9 +480,9 @@ function renderGrid(){
     }
     grid.appendChild(el);
   });
-  document.getElementById("sectionHint").textContent = profile
+  document.getElementById("sectionHint").textContent = cameFromLine()
     ? `已解鎖第 ${weeksUnlocked()} 週 · 想看下一週？回 LINE 跟鷹桃小秘書領 👉`
-    : `目前試看到 ${monthIdx+1}/${mv} · 填生日解鎖第一週`;
+    : `加 LINE 解鎖完整招財曆 · 每天都有今日招財穿搭 👉`;
 }
 
 /* ====== 彈窗：穿搭詳情 ====== */
@@ -667,6 +652,29 @@ function openRevealModal(d, justUnlocked){
 
 function openModal(){ overlay.classList.add("open"); document.body.style.overflow = "hidden"; }
 function closeModal(){ overlay.classList.remove("open"); document.body.style.overflow = ""; }
+
+/* 一進來就跳出「加入 LINE」（從 LINE 連結進來的就不跳，他已經是好友了） */
+function showJoinPrompt(){
+  if (cameFromLine()) return;
+  modal.innerHTML = `
+    <div class="modal-head">
+      <div class="grab"></div>
+      <button class="close" onclick="closeModal()">×</button>
+      <div class="m-date">✦ 招財穿搭曆 ✦</div>
+      <h3>加 LINE 解鎖完整招財曆</h3>
+    </div>
+    <div class="reveal">
+      <div class="r-desc" style="border-left-color:#06c755; background:#eefaf0;">
+        加入「鷹桃貼身小秘書」就能：<br>
+        ① 免費測你的本命招財色<br>
+        ② 每天看今日招財穿搭<br>
+        ③ 每週領完整一週招財曆
+      </div>
+      <button class="submit-btn" style="background:#06c755;" onclick="goToLine()">加入 LINE · 解鎖招財曆 →</button>
+      <div class="form-note" style="margin-top:14px"><a href="#" onclick="closeModal();return false;" style="color:var(--ink-soft);text-decoration:underline;">先看看今天的</a></div>
+    </div>`;
+  openModal();
+}
 overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
 
@@ -683,6 +691,7 @@ coverScreen.addEventListener("click", () => {
   startMusic();
   musicBtn.classList.add("playing");
   musicBtn.querySelector(".note").textContent = "🎵";
+  setTimeout(showJoinPrompt, 800);   // 進場後跳出加入 LINE
 });
 
 /* ====== 輕鬆背景音樂（瀏覽器即時合成，免外部檔案）====== */
