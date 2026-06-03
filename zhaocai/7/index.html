@@ -481,16 +481,16 @@ function renderDestiny(){
       document.getElementById("gateBtn").addEventListener("click", openFormModal);
     }
   } else {
-    // 3 天公開版：引導加 LINE
+    // 3 天公開版：引導測本命幸運色（填生日+性別+Email→資料才完整→揭曉後再加 LINE）
     box.innerHTML = `
       <div class="destiny-gate">
         <div class="dg-eyebrow">✦ 命中註定的幸運色 ✦</div>
-        <h3>解鎖你的專屬幸運穿搭曆</h3>
-        <p>加入鷹桃貼身小秘書，免費測本命幸運色<br>還能每天看今日穿搭、每週領完整一週</p>
-        <button class="dg-btn" id="gateBtn">加 LINE 解鎖完整幸運曆 →</button>
-        <div class="dg-foot">點下去加入「鷹桃貼身小秘書」🔓</div>
+        <h3>你的「本命幸運色」是哪一色？</h3>
+        <p>輸入生日 + Email，免費測出你的本命幸運色<br>測完加 LINE 還能每天看、每週領完整一週</p>
+        <button class="dg-btn" id="gateBtn">免費測本命幸運色 →</button>
+        <div class="dg-foot">30 秒，測完解鎖完整幸運曆 🔓</div>
       </div>`;
-    document.getElementById("gateBtn").addEventListener("click", goToLine);
+    document.getElementById("gateBtn").addEventListener("click", openFormModal);
   }
 }
 
@@ -581,13 +581,15 @@ async function getLineUserId(){
   return null;
 }
 
-/* 把一筆名單送進 Google 試算表（form-encoded，避開 CORS 預檢） */
+/* 把一筆名單送進 Google 試算表（form-encoded）。
+   用 sendBeacon：就算馬上換頁去 LINE，資料也送得出去（fetch 會被換頁中斷）。 */
 async function sendLead(payload){
-  if (!CONFIG.SHEET_WEBHOOK) return;   // 還沒接試算表就先不送，不影響使用者
+  if (!CONFIG.SHEET_WEBHOOK) return;
+  const body = new URLSearchParams();
+  Object.keys(payload).forEach(k => body.append(k, payload[k] == null ? "" : String(payload[k])));
   try {
-    const body = new URLSearchParams();
-    Object.keys(payload).forEach(k => body.append(k, payload[k] == null ? "" : String(payload[k])));
-    await fetch(CONFIG.SHEET_WEBHOOK, { method:"POST", body });
+    if (navigator.sendBeacon && navigator.sendBeacon(CONFIG.SHEET_WEBHOOK, body)) return;
+    await fetch(CONFIG.SHEET_WEBHOOK, { method:"POST", body, keepalive:true });
   } catch(e){}
 }
 
@@ -690,9 +692,11 @@ function openRevealModal(d, justUnlocked){
         <div class="nb-swatch" style="${swatchStyle(d.nobleHex)}"></div>
         <div class="nb-text">遇到重要場合，加一點 <b>${d.noble}</b> 當貴人色，幫你帶來貴人運與助力。</div>
       </div>
-      ${justUnlocked ? `
-        <div class="r-desc" style="border-left-color:#9c7; background:#f3f9ee;">🔓 已解鎖<b>這週</b>的幸運穿搭！<br>下週的穿搭，回 LINE 跟「鷹桃貼身小秘書」說一聲，就會把下一週送給你 👉 每週都有新的。</div>
-        <button class="submit-btn" onclick="closeModal()">太準了！先看這週穿搭 ✨</button>` : ``}
+      ${justUnlocked ? (PAGE === "teaser"
+        ? `<div class="r-desc" style="border-left-color:#06c755; background:#eefaf0;">🎁 想每天看今日幸運穿搭、每月幸運曆寄到信箱嗎？<br>加入「鷹桃貼身小秘書」就解鎖完整幸運曆，每週都有新的！</div>
+           <button class="submit-btn" style="background:#06c755;" onclick="goToLine()">加 LINE 解鎖完整幸運曆 →</button>`
+        : `<div class="r-desc" style="border-left-color:#9c7; background:#f3f9ee;">🔓 已解鎖<b>這週</b>的幸運穿搭！下週的，回 LINE 跟「鷹桃貼身小秘書」說一聲就送你 👉</div>
+           <button class="submit-btn" onclick="closeModal()">太準了！先看這週穿搭 ✨</button>`) : ``}
     </div>`;
   openModal();
 }
@@ -700,36 +704,27 @@ function openRevealModal(d, justUnlocked){
 function openModal(){ overlay.classList.add("open"); document.body.style.overflow = "hidden"; }
 function closeModal(){ overlay.classList.remove("open"); document.body.style.overflow = ""; }
 
-/* 一進來就跳出「加入 LINE」；已加過(從 LINE 來 or 按過加入)就不再跳 */
+/* 一進來就跳出引導：測本命幸運色（填生日+性別+Email，資料才會完整進名單）。
+   已加過(從 LINE 來 or 按過加入)就不再跳。 */
 function showJoinPrompt(){
-  if (PAGE !== "teaser") return;   // 只有 3 天公開版會跳加入；7 天會員版永遠不跳
+  if (PAGE !== "teaser") return;   // 只有 3 天公開版會跳；7 天會員版永遠不跳
   if (isJoined()) return;          // 已加過也不跳
   modal.innerHTML = `
     <div class="modal-head">
       <div class="grab"></div>
       <button class="close" onclick="closeModal()">×</button>
-      <div class="m-date">✦ 幸運穿搭曆 ✦</div>
-      <h3>加 LINE 解鎖完整幸運曆</h3>
+      <div class="m-date">✦ 幸運體質曆 ✦</div>
+      <h3>先測你的本命幸運色</h3>
     </div>
     <div class="reveal">
       <div class="r-desc" style="border-left-color:#06c755; background:#eefaf0;">
-        留下 Email ＋ 加入「鷹桃貼身小秘書」就能：<br>
-        ① 免費測你的本命幸運色<br>
-        ② 每天看今日幸運穿搭<br>
-        ③ 每月幸運曆直接寄到你信箱
+        輸入生日 + Email，30 秒測出你的<b>本命幸運色</b>；<br>
+        再加入「鷹桃貼身小秘書」，每天看今日幸運穿搭、每月幸運曆寄到信箱 ✨
       </div>
-      <div class="email-row"><input id="joinEmail" type="email" inputmode="email" autocomplete="email" placeholder="你的 Email（領每月幸運曆）" /></div>
-      <button class="submit-btn" style="background:#06c755;" id="joinBtn">加入 LINE · 解鎖幸運曆 →</button>
+      <button class="submit-btn" style="background:#06c755;" id="joinBtn">開始測本命幸運色 →</button>
       <div class="form-note" style="margin-top:14px"><a href="#" onclick="closeModal();return false;" style="color:var(--ink-soft);text-decoration:underline;">先看看今天的</a></div>
     </div>`;
-  document.getElementById("joinBtn").addEventListener("click", () => {
-    const email = document.getElementById("joinEmail").value.trim();
-    // 有填且格式對 → 先把 Email 存進名單(投廣用)，再去加 LINE；沒填也不擋
-    if (isEmail(email)) {
-      sendLead({ topic: CONFIG.TOPIC, email: email, source: "3day-public", submittedAt: new Date().toISOString() });
-    }
-    goToLine();
-  });
+  document.getElementById("joinBtn").addEventListener("click", openFormModal);
   openModal();
 }
 overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
