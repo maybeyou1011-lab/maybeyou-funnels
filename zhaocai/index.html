@@ -423,8 +423,15 @@ function maxView(){
   if (cameFromLine()) return Math.min(todayN + 2, 30);                              // 加了 LINE → 3 天
   return todayN;                                                                    // 冷流量 → 只到今天
 }
-/* 回 LINE 跟鷹桃小秘書領下一週 */
+/* 記/判斷這台裝置是否已經加過 LINE（加過就不再跳加入彈窗） */
+function markJoined(){ try { localStorage.setItem("zhaocai_joined", "1"); } catch(e){} }
+function isJoined(){ try { return !!localStorage.getItem("zhaocai_joined"); } catch(e){ return false; } }
+/* 從 LINE 連結(?w=)進來 → 視為已加入 */
+if (cameFromLine()) markJoined();
+
+/* 回 LINE 跟鷹桃小秘書領下一週（按了就記為已加入） */
 function goToLine(){
+  markJoined();
   const url = "https://lin.ee/9tMhphD";
   try { if (window.liff && liff.openWindow) { liff.openWindow({ url: url, external: false }); return; } } catch(e){}
   location.href = url;
@@ -691,9 +698,9 @@ function openRevealModal(d, justUnlocked){
 function openModal(){ overlay.classList.add("open"); document.body.style.overflow = "hidden"; }
 function closeModal(){ overlay.classList.remove("open"); document.body.style.overflow = ""; }
 
-/* 一進來就跳出「加入 LINE」（從 LINE 連結進來的就不跳，他已經是好友了） */
+/* 一進來就跳出「加入 LINE」；已加過(從 LINE 來 or 按過加入)就不再跳 */
 function showJoinPrompt(){
-  if (cameFromLine()) return;
+  if (cameFromLine() || isJoined()) return;
   modal.innerHTML = `
     <div class="modal-head">
       <div class="grab"></div>
