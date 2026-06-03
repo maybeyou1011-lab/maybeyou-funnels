@@ -413,16 +413,15 @@ const monthName = MONTH_CN[monthIdx] + "月";
 let todayN = now.getDate();
 if (todayN > 30) todayN = 30;
 
-/* 解鎖到第幾週：連結帶 ?w=N 就解到第 N 週（LINE 小秘書每週給新連結），預設第 1 週 */
-function weeksUnlocked(){
-  const w = parseInt(new URLSearchParams(location.search).get("w") || "", 10);
-  return (w && w > 0) ? w : 1;
-}
 function cameFromLine(){ return new URLSearchParams(location.search).has("w"); }
-/* 開放到第幾天：3 天版固定今天+2(共3天)；7 天版今天起整週(可由 ?w 往後加週) */
+/* 依 6 月日期算「目前第幾週」(每 7 天一週：1-7、8-14、15-21、22-28、29-30；6/1 剛好週一) */
+function currentWeek(){ return Math.ceil(todayN / 7); }
+/* 某一天屬於哪一週的起始日(那週的自動開放日) */
+function weekStartDay(d){ return (Math.ceil(d / 7) - 1) * 7 + 1; }
+/* 開放到第幾天：3 天版固定今天+2(共3天)；7 天會員版＝自動開放到「本週」(每滿一週自動解鎖新的一週) */
 function maxView(){
   if (PAGE === "teaser") return Math.min(todayN + 2, 30);
-  return Math.min(todayN + 6 + 7 * (weeksUnlocked() - 1), 30);
+  return Math.min(currentWeek() * 7, 30);
 }
 /* 記/判斷這台裝置是否已加過 LINE。key 用全站共用的(不帶主題)，
    所以在任何一個模板頁(幸運穿搭/風水…)加過，其他頁都不再跳加入彈窗。 */
@@ -498,22 +497,22 @@ function renderGrid(){
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
   const mv = maxView();
-  // 鎖住格子的提示與動作，依三段式狀態決定
-  let lockLabel, lockAction;
-  if (PAGE === "teaser") { lockLabel = "加 LINE 解鎖"; lockAction = goToLine; }
-  else                   { lockLabel = "回 LINE 領下一週"; lockAction = goToLine; }
   DATA.forEach((item, i) => {
     const locked = item.d > mv;
     const el = document.createElement("div");
     el.className = "day" + (item.d === todayN ? " is-today" : "") + (locked ? " locked" : "");
     if (locked) {
+      // 3 天版：加 LINE 解鎖；7 天會員版：顯示「該週自動開放日」(到日期自動解鎖)
+      let lockLabel, lockAction;
+      if (PAGE === "teaser") { lockLabel = "加 LINE 解鎖"; lockAction = goToLine; }
+      else { lockLabel = `${monthIdx + 1}/${weekStartDay(item.d)} 開放`; lockAction = () => showWeekInfo(item.d); }
       el.innerHTML = `
         <div class="dnum">${item.d}</div>
         <div class="wk">${item.wk}</div>
         <div class="swatch" style="${swatchStyle(item.hex)}"></div>
         <div class="cname">？？？</div>
         <div class="lock"><span class="ico">🔒</span><span>${lockLabel}</span></div>`;
-      el.addEventListener("click", lockAction);   // 依狀態：加 LINE / 填資料 / 回 LINE 領下一週
+      el.addEventListener("click", lockAction);
     } else {
       el.innerHTML = `
         ${item.d === todayN ? '<span class="star">★ 今日</span>' : ''}
@@ -528,7 +527,23 @@ function renderGrid(){
   document.getElementById("sectionHint").textContent =
     PAGE === "teaser"
       ? `先看 3 天 · 加 LINE 解鎖完整幸運曆，每天都有今日幸運穿搭 👉`
-      : `本週 7 天已開放 · 想看下一週？回 LINE 跟鷹桃小秘書領 👉`;
+      : `本週已開放 · 每到新的一週自動解鎖那一週，記得回來看 ✨`;
+}
+
+/* 點到還沒開放的日子 → 告知自動開放日 */
+function showWeekInfo(d){
+  modal.innerHTML = `
+    <div class="modal-head">
+      <div class="grab"></div>
+      <button class="close" onclick="closeModal()">×</button>
+      <div class="m-date">📅 尚未開放</div>
+      <h3>${monthIdx + 1} / ${weekStartDay(d)} 自動開放</h3>
+    </div>
+    <div class="reveal">
+      <div class="r-desc">這一週的幸運穿搭會在 <b>${monthIdx + 1}/${weekStartDay(d)}</b> 自動解鎖。<br>到時候回來，就能看到一整週的幸運色 ✨</div>
+      <button class="submit-btn" onclick="closeModal()">好，到時回來看</button>
+    </div>`;
+  openModal();
 }
 
 /* ====== 彈窗：穿搭詳情 ====== */
