@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>2026 居家風水指南｜十二生肖開運擺設</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  :root{ --gold:#b88a3e; --gold-soft:#e6d4ab; --ink:#3a322a; --ink-soft:#7a6f60; --paper:#f6efe2; --card:#fff; --line:#ece1cd; }
+  body{ font-family:"Noto Sans TC",system-ui,sans-serif; color:var(--ink);
+    background:radial-gradient(circle at 15% 2%,#fff8ea 0%,transparent 40%),var(--paper); line-height:1.7; -webkit-font-smoothing:antialiased; }
+  .serif{ font-family:"Noto Serif TC",serif; }
+  .wrap{ max-width:480px; margin:0 auto; }
+
+  /* 封面 */
+  .cover-screen{ position:fixed; inset:0; z-index:100; background:#0c0a08; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:opacity .6s ease; }
+  .cover-screen img{ width:100%; height:100%; object-fit:cover; object-position:center; }
+  .cover-screen.fade{ opacity:0; pointer-events:none; }
+  .enter-hint{ position:absolute; left:0; right:0; bottom:calc(34px + env(safe-area-inset-bottom)); text-align:center; color:#fff; font-size:16px; letter-spacing:4px; font-weight:500; text-shadow:0 2px 12px rgba(0,0,0,.55); animation:breathe 2.4s ease-in-out infinite; }
+  .enter-hint .pill{ display:inline-block; padding:10px 26px; border:1px solid rgba(255,255,255,.65); border-radius:999px; backdrop-filter:blur(2px); background:rgba(0,0,0,.15); }
+  @keyframes breathe{ 0%,100%{opacity:.55;transform:translateY(0);} 50%{opacity:1;transform:translateY(-4px);} }
+
+  #content{ display:none; animation:fadein .6s ease both; padding-bottom:60px; }
+  @keyframes fadein{ from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:translateY(0);} }
+  .topbar{ text-align:center; padding:28px 24px 2px; }
+  .topbar .eyebrow{ letter-spacing:5px; font-size:12px; color:var(--gold); font-weight:700; }
+  .topbar h1{ font-family:"Noto Serif TC",serif; font-size:30px; letter-spacing:1px; margin-top:6px; }
+  .topbar h1 .accent{ color:var(--gold); }
+  .intro{ text-align:center; padding:16px 28px 4px; }
+  .intro .divider{ width:54px; height:3px; background:linear-gradient(90deg,transparent,var(--gold),transparent); margin:0 auto 16px; border-radius:2px; }
+  .intro p{ color:var(--ink-soft); font-size:15px; }
+
+  .area{ padding:22px 18px 4px; }
+
+  /* 入口 gate */
+  .gate{ position:relative; overflow:hidden; background:linear-gradient(135deg,#fffdf7,#f4ead2); border:1px solid var(--gold-soft); border-radius:22px; padding:26px 24px; box-shadow:0 16px 36px -22px rgba(150,110,30,.5); text-align:center; }
+  .gate .ge{ letter-spacing:4px; font-size:12px; color:var(--gold); font-weight:700; }
+  .gate h3{ font-family:"Noto Serif TC",serif; font-size:22px; margin:8px 0 6px; }
+  .gate p{ font-size:14px; color:var(--ink-soft); margin-bottom:18px; }
+  .gate .gbtn{ display:inline-block; border:none; cursor:pointer; background:linear-gradient(135deg,#d4af7a,#b88a3e); color:#fff; font-weight:700; font-size:16px; letter-spacing:1px; padding:13px 28px; border-radius:999px; box-shadow:0 12px 26px -10px rgba(150,110,30,.6); transition:transform .15s; }
+  .gate .gbtn:active{ transform:scale(.96); }
+  .gate .gfoot{ margin-top:12px; font-size:12px; color:var(--ink-soft); }
+
+  /* 結果 */
+  .res-head{ text-align:center; margin-bottom:16px; }
+  .res-head .z{ display:inline-flex; align-items:center; justify-content:center; width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#d4af7a,#b88a3e); color:#fff; font-family:"Noto Serif TC",serif; font-size:30px; box-shadow:0 10px 24px -10px rgba(150,110,30,.6); }
+  .res-head h2{ font-family:"Noto Serif TC",serif; font-size:22px; margin-top:10px; }
+  .res-head .sub{ font-size:14px; color:var(--ink-soft); margin-top:4px; padding:0 10px; }
+
+  .dirs{ display:grid; grid-template-columns:1fr 1fr; gap:12px; position:relative; }
+  .dir{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:14px 14px 16px; }
+  .dir .dlabel{ display:inline-block; font-family:"Noto Serif TC",serif; font-weight:700; font-size:15px; padding:2px 12px; border-radius:999px; margin-bottom:8px; color:#fff; }
+  .dir.e .dlabel{ background:#5a8a5a; } .dir.w .dlabel{ background:#b8932f; }
+  .dir.s .dlabel{ background:#cf6a4a; } .dir.n .dlabel{ background:#3f6090; }
+  .dir .dtext{ font-size:14px; color:var(--ink); }
+
+  /* 鎖住罩（teaser） */
+  .dirs.locked .dir .dtext{ filter:blur(5px); opacity:.5; user-select:none; }
+  .lock-cta{ margin-top:16px; text-align:center; }
+  .lock-cta .lc-btn{ width:100%; border:none; cursor:pointer; background:#06c755; color:#fff; font-weight:700; font-size:16px; padding:15px; border-radius:14px; box-shadow:0 12px 26px -10px rgba(6,199,85,.5); }
+  .lock-cta .lc-foot{ margin-top:10px; font-size:13px; color:var(--ink-soft); }
+
+  .keybox{ margin-top:18px; background:#fbf5e8; border-left:3px solid var(--gold); padding:14px 16px; border-radius:0 12px 12px 0; }
+  .keybox .kt{ font-weight:700; color:var(--gold); font-size:13px; letter-spacing:1px; margin-bottom:4px; }
+  .keybox .kc{ font-size:14px; color:var(--ink-soft); }
+
+  /* 彈窗（表單） */
+  .overlay{ position:fixed; inset:0; background:rgba(40,34,26,.6); backdrop-filter:blur(3px); display:none; align-items:flex-end; justify-content:center; z-index:50; }
+  .overlay.open{ display:flex; }
+  .modal{ background:var(--card); border-radius:26px 26px 0 0; width:100%; max-width:480px; max-height:92vh; overflow-y:auto; padding:0 0 calc(28px + env(safe-area-inset-bottom)); box-shadow:0 -10px 50px -10px rgba(0,0,0,.5); animation:slideup .3s cubic-bezier(.2,.8,.2,1); }
+  @keyframes slideup{ from{transform:translateY(100%);} to{transform:translateY(0);} }
+  .modal-head{ padding:26px 26px 18px; text-align:center; border-bottom:1px solid var(--line); position:relative; }
+  .modal-head .grab{ width:40px; height:4px; background:var(--line); border-radius:999px; margin:-10px auto 14px; }
+  .modal-head .close{ position:absolute; top:16px; right:18px; width:34px; height:34px; border:none; background:#f2ebdc; color:var(--ink-soft); border-radius:50%; font-size:18px; cursor:pointer; }
+  .modal-head .m-eye{ font-size:14px; color:var(--ink-soft); letter-spacing:1px; }
+  .modal-head h3{ font-family:"Noto Serif TC",serif; font-size:24px; margin-top:4px; }
+  .form-intro{ text-align:center; padding:14px 26px 4px; color:var(--ink-soft); font-size:14px; }
+  .form-body{ padding:14px 26px 0; }
+  .bday-row{ display:flex; gap:10px; margin-bottom:16px; }
+  .bday-row select{ flex:1; padding:13px 10px; font-size:15px; font-family:inherit; border:1px solid var(--line); border-radius:12px; background:#fcf8ef; color:var(--ink); appearance:none; text-align:center; }
+  .gender-row{ display:flex; gap:10px; margin-bottom:16px; }
+  .gender-row .g{ flex:1; text-align:center; padding:12px 0; font-size:15px; cursor:pointer; border:1px solid var(--line); border-radius:12px; background:#fcf8ef; color:var(--ink-soft); transition:all .15s; }
+  .gender-row .g.sel{ border-color:var(--gold); background:#fbf2dd; color:var(--ink); font-weight:700; }
+  .email-row{ margin-bottom:20px; }
+  .email-row input{ width:100%; padding:13px 14px; font-size:15px; font-family:inherit; border:1px solid var(--line); border-radius:12px; background:#fcf8ef; color:var(--ink); }
+  .email-row input::placeholder{ color:#b3a892; }
+  .submit-btn{ width:100%; border:none; cursor:pointer; background:linear-gradient(135deg,#d4af7a,#b88a3e); color:#fff; font-weight:700; font-size:17px; letter-spacing:1px; padding:15px; border-radius:14px; box-shadow:0 12px 26px -10px rgba(150,110,30,.6); transition:transform .15s,opacity .15s; }
+  .submit-btn:active{ transform:scale(.98); }
+  .submit-btn:disabled{ opacity:.45; cursor:default; }
+  .form-note{ text-align:center; font-size:12px; color:var(--ink-soft); margin-top:12px; }
+
+  footer{ text-align:center; padding:28px 20px 90px; color:var(--ink-soft); font-size:13px; }
+  footer .brand{ color:var(--gold); font-weight:700; }
+</style>
+</head>
+<body>
+<div class="cover-screen" id="coverScreen">
+  <img src="cover.jpg" alt="2026 居家風水指南 · 東西南北開運擺設">
+  <div class="enter-hint"><span class="pill">輕觸進入 ✨</span></div>
+</div>
+
+<div class="wrap" id="content">
+  <div class="topbar">
+    <div class="eyebrow">2026 HOME LIVING</div>
+    <h1 class="serif">2026 居家<span class="accent">風水</span>指南</h1>
+  </div>
+  <div class="intro">
+    <div class="divider"></div>
+    <p>東・西・南・北 開運擺設提案<br>依你的生肖，把家佈成 2026 的幸運場域 ✨</p>
+  </div>
+  <div class="area" id="fsArea"></div>
+  <footer>2026 居家風水指南 · by <span class="brand">美你的事</span><br>提升能量流動，打造和諧好宅 🏡</footer>
+</div>
+
+<div class="overlay" id="overlay"><div class="modal" id="modal"></div></div>
+
+<script>
+/* ===== 頁面模式：teaser=公開版(看重點,完整擺設要加LINE) member=會員版(全看) ===== */
+const PAGE = "member";
+
+/* ===== 12 生肖 2026 居家風水 ===== */
+const ZODIAC = ["鼠","牛","虎","兔","龍","蛇","馬","羊","猴","雞","狗","豬"];
+const FS = {
+  鼠:{head:"2026 容易被火馬年衝到，要先穩心", e:"小型綠植、木質相框", w:"金屬收納盤、白色陶瓷杯", s:"米色陶瓷擺件，少用大紅色", n:"藍色地墊、玻璃杯、水紋畫", key:"鼠在 2026 不適合把家裡弄得太紅、太亮、太刺激。你要的是「降火氣」，不是硬衝運。"},
+  牛:{head:"適合穩中求進，家裡要有秩序感", e:"圓葉植物、木質托盤", w:"金色小盤、金屬筆筒", s:"暖光小檯燈、紅棕色小物", n:"深藍色抱枕、玻璃水杯", key:"牛不要堆太多雜物。2026 最怕「慢又卡」，家裡越亂，做事越拖。"},
+  虎:{head:"2026 動能強，適合衝事業與曝光", e:"高一點的綠植、木質書架", w:"白色圓形擺件、金屬時鐘", s:"暖光燈、紅橘色香氛蠟燭", n:"藍色收納盒、水景畫", key:"虎可以借火馬年的勢，但不要只衝不收。北方一定要放讓自己冷靜的東西。"},
+  兔:{head:"容易想太多，2026 要穩定情緒與關係", e:"小盆栽、木質香氛", w:"白色陶瓷花器、金屬首飾盒", s:"粉橘色小燈、暖色卡片", n:"藍灰色抱枕、玻璃瓶", key:"兔不要把臥室做得太亮太紅，會更焦慮。你要的是溫柔，不是刺激。"},
+  龍:{head:"2026 適合建立舞台感，但要避免太膨脹", e:"綠植、木質桌墊", w:"金屬擺件、白色收納盤", s:"暖光立燈、橘紅色藝術畫", n:"深藍色杯墊、黑色小收納盒", key:"龍可以在南方加一點火，增加存在感。但不要整間家都做得太浮誇，會變成氣很滿、但不聚財。"},
+  蛇:{head:"火氣偏旺，2026 要避免火上加火", e:"小型綠植，不要太多", w:"金屬香氛座、白色陶瓷", s:"米白色小物，少用紅色", n:"藍黑色地墊、玻璃水杯、水紋畫", key:"蛇在 2026 不缺火，缺的是冷靜。南方不要放太多紅色、蠟燭、強光燈。"},
+  馬:{head:"本命年，最重要是穩住自己", e:"綠植、木質書籤", w:"金屬收納盤、白色圓形擺件", s:"米色陶瓷、暖光但不要過亮", n:"藍色抱枕、黑色小物、玻璃杯", key:"馬年不是叫屬馬的人更衝。你已經在火裡了，家裡要幫你「降速」。"},
+  羊:{head:"2026 容易有人緣與合作運，可加強關係能量", e:"圓葉植物、木質相框", w:"金色小物、白色花瓶", s:"粉橘色燈、雙數擺件", n:"藍灰色毯子、玻璃水杯", key:"羊適合擺「成雙成對」的小物，例如兩個杯子、兩個小擺件，強化合作與關係感。"},
+  猴:{head:"2026 適合開創，但容易分心", e:"小綠植、木質筆筒", w:"金屬文件架、白色收納盒", s:"小檯燈、橘色卡片", n:"深藍色筆記本、玻璃杯", key:"猴最需要的是「收斂」。西方可以放收納、文件架，讓腦袋不要一直跳。"},
+  雞:{head:"2026 適合專業形象與金錢秩序", e:"小型植物，不宜雜亂", w:"金屬招財盤、白色陶瓷、圓形鏡", s:"暖光燈、紅棕色小物", n:"藍色杯墊、黑色文件夾", key:"雞的重點在西方。那裡適合乾淨、亮、有金屬感，代表秩序與專業。"},
+  狗:{head:"2026 有機會被看見，但要避免硬撐", e:"木質相框、綠植", w:"金屬小鐘、白色收納盤", s:"暖光立燈、橘紅色藝術小物", n:"深藍色抱枕、玻璃瓶", key:"狗可以加南方火，提升曝光感。但北方要保留安靜區，不然容易變成外面很強、回家很累。"},
+  豬:{head:"2026 要守住節奏，不要被外界拉著跑", e:"綠植、木質托盤", w:"金屬杯墊、白色陶瓷", s:"米色陶瓷，少用大紅色", n:"藍色地墊、玻璃水杯、水景畫", key:"豬在 2026 不適合過度追趕別人。北方要做成讓自己安定的角落。"},
+};
+function zodiacOf(year){ return ZODIAC[(((year - 4) % 12) + 12) % 12]; }
+
+/* ===== 設定 ===== */
+const CONFIG = {
+  TOPIC: "風水",
+  SHEET_WEBHOOK: "https://script.google.com/macros/s/AKfycbzbEiUEiZ72jjOqwHH9Y-mpvIxb5M8iPJjC3E22XbGJ2DpQoiz_wxiVATWjszhzWz_b/exec",
+  LIFF_ID: "2010278875-7X46fusb",
+};
+(function initLiff(){ if(!CONFIG.LIFF_ID||!window.liff) return; liff.init({liffId:CONFIG.LIFF_ID}).then(()=>{ if(!liff.isLoggedIn()&&liff.isInClient()) liff.login(); }).catch(()=>{}); })();
+async function getLineUserId(){ try{ if(window.liff&&liff.getProfile){ const p=await liff.getProfile(); return p.userId; } }catch(e){} return null; }
+async function sendLead(payload){
+  if(!CONFIG.SHEET_WEBHOOK) return;
+  const body=new URLSearchParams();
+  Object.keys(payload).forEach(k=>body.append(k,payload[k]==null?"":String(payload[k])));
+  try{ if(navigator.sendBeacon&&navigator.sendBeacon(CONFIG.SHEET_WEBHOOK,body)) return; await fetch(CONFIG.SHEET_WEBHOOK,{method:"POST",body,keepalive:true}); }catch(e){}
+}
+function markJoined(){ try{ localStorage.setItem("maybeyou_line_joined","1"); }catch(e){} }
+function isJoined(){ try{ return !!localStorage.getItem("maybeyou_line_joined"); }catch(e){ return false; } }
+function goToLine(){ markJoined(); const url="https://lin.ee/9tMhphD"; try{ if(window.liff&&liff.openWindow){ liff.openWindow({url:url,external:false}); return; } }catch(e){} location.href=url; }
+
+const STORE_KEY="fengshui_profile";
+function loadProfile(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"null"); }catch(e){ return null; } }
+function saveProfile(p){ localStorage.setItem(STORE_KEY,JSON.stringify(p)); }
+let profile=loadProfile();
+
+const overlay=document.getElementById("overlay"), modal=document.getElementById("modal");
+const openModal=()=>{ overlay.classList.add("open"); document.body.style.overflow="hidden"; };
+function closeModal(){ overlay.classList.remove("open"); document.body.style.overflow=""; }
+window.closeModal=closeModal; window.goToLine=goToLine;
+overlay.addEventListener("click",e=>{ if(e.target===overlay) closeModal(); });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
+
+/* ===== 主區：沒填→入口gate；填了→風水結果 ===== */
+function render(){
+  const a=document.getElementById("fsArea");
+  if(!profile){
+    a.innerHTML=`
+      <div class="gate">
+        <div class="ge">✦ 你的 2026 居家風水 ✦</div>
+        <h3>你家今年該怎麼佈，才旺？</h3>
+        <p>輸入生日，看你的生肖 2026 東西南北<br>該擺什麼、避開什麼</p>
+        <button class="gbtn" id="goBtn">免費看我的居家開運擺設 →</button>
+        <div class="gfoot">30 秒，依生肖客製 🏡</div>
+      </div>`;
+    document.getElementById("goBtn").addEventListener("click",openForm);
+    return;
+  }
+  const z=zodiacOf(profile.year), f=FS[z];
+  const locked = (PAGE==="teaser");
+  a.innerHTML=`
+    <div class="res-head">
+      <div class="z">${z}</div>
+      <h2>屬${z} · 2026 居家風水</h2>
+      <div class="sub">${f.head}</div>
+    </div>
+    <div class="dirs ${locked?"locked":""}">
+      <div class="dir e"><span class="dlabel">東方</span><div class="dtext">${f.e}</div></div>
+      <div class="dir w"><span class="dlabel">西方</span><div class="dtext">${f.w}</div></div>
+      <div class="dir s"><span class="dlabel">南方</span><div class="dtext">${f.s}</div></div>
+      <div class="dir n"><span class="dlabel">北方</span><div class="dtext">${f.n}</div></div>
+    </div>
+    ${locked?`
+      <div class="lock-cta">
+        <button class="lc-btn" onclick="goToLine()">加 LINE 解鎖完整四方位擺設 →</button>
+        <div class="lc-foot">加入鷹桃貼身小秘書，看完整東西南北怎麼擺 🔓</div>
+      </div>`:``}
+    <div class="keybox">
+      <div class="kt">💡 2026 重點提醒</div>
+      <div class="kc">${f.key}</div>
+    </div>`;
+}
+
+/* ===== 生日表單 ===== */
+let formState={ year:"", month:"", day:"", gender:"", email:"" };
+const isEmail=s=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+function openForm(){
+  formState={ year:"", month:"", day:"", gender:"", email:"" };
+  const now=new Date(), years=[];
+  for(let y=now.getFullYear()-12; y>=now.getFullYear()-80; y--) years.push(y);
+  const yo=years.map(y=>`<option value="${y}">${y} 年</option>`).join("");
+  const mo=Array.from({length:12},(_,i)=>`<option value="${i+1}">${i+1} 月</option>`).join("");
+  const do_=Array.from({length:31},(_,i)=>`<option value="${i+1}">${i+1} 日</option>`).join("");
+  modal.innerHTML=`
+    <div class="modal-head">
+      <div class="grab"></div>
+      <button class="close" onclick="closeModal()">×</button>
+      <div class="m-eye">✦ 2026 居家風水 ✦</div>
+      <h3>輸入你的生日</h3>
+    </div>
+    <div class="form-intro">用生日算出你的生肖，給你 2026 居家開運擺設<br>Email 用來把完整指南與每月開運提醒寄給你</div>
+    <div class="form-body">
+      <div class="bday-row">
+        <select id="selYear"><option value="" disabled selected>出生年</option>${yo}</select>
+        <select id="selMonth"><option value="" disabled selected>月</option>${mo}</select>
+        <select id="selDay"><option value="" disabled selected>日</option>${do_}</select>
+      </div>
+      <div class="gender-row">
+        <div class="g" data-g="female">女生</div>
+        <div class="g" data-g="male">男生</div>
+        <div class="g" data-g="other">不透露</div>
+      </div>
+      <div class="email-row"><input id="selEmail" type="email" inputmode="email" autocomplete="email" placeholder="你的 Email（領完整風水指南）" /></div>
+      <button class="submit-btn" id="submitBtn" disabled>看我的 2026 居家風水 →</button>
+      <div class="form-note">只用來算你的生肖、寄指南給你，不會外流 🔒</div>
+    </div>`;
+  const check=()=>{
+    formState.year=document.getElementById("selYear").value;
+    formState.month=document.getElementById("selMonth").value;
+    formState.day=document.getElementById("selDay").value;
+    formState.email=document.getElementById("selEmail").value.trim();
+    document.getElementById("submitBtn").disabled=!(formState.year&&formState.month&&formState.day&&formState.gender&&isEmail(formState.email));
+  };
+  ["selYear","selMonth","selDay"].forEach(id=>document.getElementById(id).addEventListener("change",check));
+  document.getElementById("selEmail").addEventListener("input",check);
+  modal.querySelectorAll(".gender-row .g").forEach(g=>g.addEventListener("click",()=>{
+    modal.querySelectorAll(".gender-row .g").forEach(x=>x.classList.remove("sel"));
+    g.classList.add("sel"); formState.gender=g.dataset.g; check();
+  }));
+  document.getElementById("submitBtn").addEventListener("click",submitForm);
+  openModal();
+}
+async function submitForm(){
+  profile={ year:parseInt(formState.year,10), month:parseInt(formState.month,10), day:parseInt(formState.day,10), gender:formState.gender, email:formState.email };
+  saveProfile(profile);
+  const z=zodiacOf(profile.year);
+  sendLead({ topic:CONFIG.TOPIC, email:profile.email, birthday:`${profile.year}/${profile.month}/${profile.day}`, gender:profile.gender, zodiac:z, element:"", destinyColor:"", lineUserId:await getLineUserId(), submittedAt:new Date().toISOString() });
+  closeModal();
+  render();
+}
+
+/* 初次渲染 + 封面進入 */
+render();
+const coverScreen=document.getElementById("coverScreen");
+coverScreen.addEventListener("click",()=>{
+  document.getElementById("content").style.display="block";
+  coverScreen.classList.add("fade");
+  setTimeout(()=>coverScreen.remove(),650);
+  if(PAGE==="teaser" && !isJoined() && !profile) setTimeout(openForm,700);
+});
+</script>
+</body>
+</html>
