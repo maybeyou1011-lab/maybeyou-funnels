@@ -423,9 +423,10 @@ function maxView(){
   if (cameFromLine()) return Math.min(todayN + 2, 30);                              // 加了 LINE → 3 天
   return todayN;                                                                    // 冷流量 → 只到今天
 }
-/* 記/判斷這台裝置是否已經加過 LINE（加過就不再跳加入彈窗） */
-function markJoined(){ try { localStorage.setItem("zhaocai_joined", "1"); } catch(e){} }
-function isJoined(){ try { return !!localStorage.getItem("zhaocai_joined"); } catch(e){ return false; } }
+/* 記/判斷這台裝置是否已加過 LINE。key 用全站共用的(不帶主題)，
+   所以在任何一個模板頁(招財穿搭/風水…)加過，其他頁都不再跳加入彈窗。 */
+function markJoined(){ try { localStorage.setItem("maybeyou_line_joined", "1"); } catch(e){} }
+function isJoined(){ try { return !!localStorage.getItem("maybeyou_line_joined"); } catch(e){ return false; } }
 /* 從 LINE 連結(?w=)進來 → 視為已加入 */
 if (cameFromLine()) markJoined();
 
