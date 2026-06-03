@@ -96,6 +96,12 @@
   footer{ text-align:center; padding:28px 20px 90px; color:var(--ink-soft); font-size:13px; }
   footer .brand{ color:var(--gold); font-weight:700; }
 
+  /* 結果頁生肖卡圖 + 分享 */
+  .card-share{ margin:20px 0 4px; text-align:center; }
+  .card-share .zcard{ width:100%; max-width:360px; border-radius:18px; box-shadow:0 16px 40px -16px rgba(120,90,30,.5); border:1px solid var(--gold-soft); }
+  .card-btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; margin-top:14px; padding:13px 26px; border:none; border-radius:14px; cursor:pointer; font-size:15px; font-weight:700; letter-spacing:1px; background:linear-gradient(135deg,#b88a3e,#966e1e); color:#fff; box-shadow:0 10px 24px -10px rgba(120,90,30,.6); transition:transform .15s; }
+  .card-btn:active{ transform:scale(.97); }
+
   /* 頁尾行動按鈕（加 LINE / 分享） */
   .foot-actions{ max-width:420px; margin:28px auto 0; padding:0 18px; display:flex; flex-direction:column; gap:12px; }
   .foot-btn{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:15px 18px; border:none; border-radius:16px; cursor:pointer; font-size:16px; font-weight:700; letter-spacing:1px; transition:transform .15s; }
@@ -162,6 +168,9 @@ const FS = {
   豬:{head:"2026 要守住節奏，不要被外界拉著跑", e:"綠植、木質托盤", w:"金屬杯墊、白色陶瓷", s:"米色陶瓷，少用大紅色", n:"藍色地墊、玻璃水杯、水景畫", key:"豬在 2026 不適合過度追趕別人。北方要做成讓自己安定的角落。"},
 };
 function zodiacOf(year){ return ZODIAC[(((year - 4) % 12) + 12) % 12]; }
+/* 生肖 → 圖檔拼音（卡片圖檔名 cards/fs-{拼音}.jpg） */
+const ZODIAC_PY={ 鼠:"shu", 牛:"niu", 虎:"hu", 兔:"tu", 龍:"long", 蛇:"she", 馬:"ma", 羊:"yang", 猴:"hou", 雞:"ji", 狗:"gou", 豬:"zhu" };
+function cardSrc(z){ return "cards/fs-"+ZODIAC_PY[z]+".jpg"; }
 
 /* ===== 設定 ===== */
 const CONFIG = {
@@ -191,13 +200,31 @@ async function doShare(text,url){
   catch(e){ window.prompt("複製這段分享給朋友：",full); }
 }
 function shareLink(){ doShare("🏡 2026 居家風水指南｜依生肖把家佈成今年的幸運場域，東西南北怎麼擺一次告訴你 👉",SHARE_URL); }
-function shareResult(){
+function shareResult(){ shareCard(); }   // 頁尾「分享我的開運佈置」＝分享生肖卡圖
+
+/* 分享生肖開運卡（手機優先把「圖片」一起分享，不支援就下載圖＋複製文字） */
+async function shareCard(){
   if(!profile){ shareLink(); return; }
-  const z=zodiacOf(profile.year), f=FS[z];
-  const text=`🏡 我屬${z}，2026 居家開運重點：${f.head}。\n（南方放${f.s}、北方放${f.n}）\n你家該怎麼佈？快來測 👉`;
-  doShare(text,SHARE_URL);
+  const z=zodiacOf(profile.year), f=FS[z], src=cardSrc(z);
+  const text=`🏡 我屬${z}，2026 居家開運重點：${f.head}。\n你家該怎麼佈？快來測你的 2026 居家風水 👉 ${SHARE_URL}`;
+  try{
+    const resp=await fetch(src);
+    const blob=await resp.blob();
+    const file=new File([blob],`2026居家風水-屬${z}.jpg`,{type:"image/jpeg"});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({ files:[file], text:text });
+      return;
+    }
+  }catch(e){ if(e&&e.name==="AbortError") return; }   // 使用者取消就不再彈
+  // 不支援檔案分享 → 直接下載圖片，文字複製到剪貼簿
+  try{
+    const a=document.createElement("a"); a.href=src; a.download=`2026居家風水-屬${z}.jpg`;
+    document.body.appendChild(a); a.click(); a.remove();
+    try{ await navigator.clipboard.writeText(text); }catch(e){}
+    toast("開運卡已下載，貼到 IG / 限動 / LINE 分享吧 🏡");
+  }catch(e){ window.open(src,"_blank"); }
 }
-window.shareLink=shareLink; window.shareResult=shareResult;
+window.shareLink=shareLink; window.shareResult=shareResult; window.shareCard=shareCard;
 
 const STORE_KEY="fengshui_profile";
 function loadProfile(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"null"); }catch(e){ return null; } }
@@ -233,6 +260,10 @@ function render(){
       <div class="z">${z}</div>
       <h2>屬${z} · 2026 居家風水</h2>
       <div class="sub">${f.head}</div>
+    </div>
+    <div class="card-share">
+      <img class="zcard" src="${cardSrc(z)}" alt="屬${z} 2026 居家風水加持卡" loading="lazy">
+      <button class="card-btn" onclick="shareCard()">📤 把這張開運卡分享出去</button>
     </div>
     <div class="dirs">
       <div class="dir e"><span class="dlabel">東方</span><div class="dtext">${f.e}</div></div>
