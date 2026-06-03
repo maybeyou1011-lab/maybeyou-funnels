@@ -413,10 +413,15 @@ function weeksUnlocked(){
   const w = parseInt(new URLSearchParams(location.search).get("w") || "", 10);
   return (w && w > 0) ? w : 1;
 }
-/* 從 LINE 連結進來(?w=N) → 解鎖到第 N 週；社群冷流量(沒帶 w) → 只看得到今天，其餘要加 LINE 解鎖 */
+/* 三段式解鎖：
+   1) 冷流量(沒加 LINE，網址沒帶 w) → 只看今天，其餘「加 LINE 解鎖」
+   2) 加了 LINE(從小秘書連結進來，帶 ?w=N) → 開放 3 天嚐鮮
+   3) 填生日+Email → 解鎖整週(7 天)；第 N 週 = 今天起 7N 天 */
 function cameFromLine(){ return new URLSearchParams(location.search).has("w"); }
 function maxView(){
-  return cameFromLine() ? Math.min(7 * weeksUnlocked(), 30) : todayN;
+  if (profile)        return Math.min(todayN + 6 + 7 * (weeksUnlocked() - 1), 30); // 填了資料 → 整週
+  if (cameFromLine()) return Math.min(todayN + 2, 30);                              // 加了 LINE → 3 天
+  return todayN;                                                                    // 冷流量 → 只到今天
 }
 /* 回 LINE 跟鷹桃小秘書領下一週 */
 function goToLine(){
@@ -441,15 +446,42 @@ document.getElementById("todayCard").addEventListener("click", () => openDayModa
 /* ---- 本命招財色區塊（依是否解鎖切換）---- */
 function renderDestiny(){
   const box = document.getElementById("destinyWrap");
-  box.innerHTML = `
-    <div class="destiny-gate">
-      <div class="dg-eyebrow">✦ 命中註定的招財色 ✦</div>
-      <h3>你的「本命招財色」是哪一色？</h3>
-      <p>加入鷹桃貼身小秘書，免費測你的專屬本命招財色<br>還能每週領完整招財穿搭曆</p>
-      <button class="dg-btn" id="gateBtn">加 LINE 解鎖完整招財曆 →</button>
-      <div class="dg-foot">點下去加入「鷹桃貼身小秘書」🔓</div>
-    </div>`;
-  document.getElementById("gateBtn").addEventListener("click", goToLine);
+  if (profile) {
+    // 已填生日+Email → 顯示本命招財色結果
+    const d = destinyByBirthday(profile.year);
+    box.innerHTML = `
+      <div class="destiny-result" id="destinyResult">
+        <div class="dr-swatch" style="${swatchStyle(d.hex)}"></div>
+        <div>
+          <div class="dr-eyebrow">你的本命招財色 · ${d.zodiac}（${d.element}）</div>
+          <h4>${d.color}</h4>
+          <div class="dr-sub">貴人色：${d.noble}　·　點看完整解讀</div>
+        </div>
+      </div>`;
+    document.getElementById("destinyResult").addEventListener("click", () => openRevealModal(d, false));
+  } else if (cameFromLine()) {
+    // 已加 LINE、還沒填 → 引導填生日+Email 解鎖整週
+    box.innerHTML = `
+      <div class="destiny-gate">
+        <div class="dg-eyebrow">✦ 本命招財色 ✦</div>
+        <h3>想看完整一週招財穿搭？</h3>
+        <p>輸入生日 + Email，立刻測出你的本命招財色<br>並解鎖這一週每日穿搭</p>
+        <button class="dg-btn" id="gateBtn">填資料解鎖整週 →</button>
+        <div class="dg-foot">免費，30 秒 🔓</div>
+      </div>`;
+    document.getElementById("gateBtn").addEventListener("click", openFormModal);
+  } else {
+    // 冷流量 → 先加 LINE
+    box.innerHTML = `
+      <div class="destiny-gate">
+        <div class="dg-eyebrow">✦ 命中註定的招財色 ✦</div>
+        <h3>解鎖你的專屬招財穿搭曆</h3>
+        <p>加入鷹桃貼身小秘書，免費測本命招財色<br>還能每天看今日穿搭、每週領完整一週</p>
+        <button class="dg-btn" id="gateBtn">加 LINE 解鎖完整招財曆 →</button>
+        <div class="dg-foot">點下去加入「鷹桃貼身小秘書」🔓</div>
+      </div>`;
+    document.getElementById("gateBtn").addEventListener("click", goToLine);
+  }
 }
 
 /* ---- 月曆網格 ---- */
@@ -457,6 +489,11 @@ function renderGrid(){
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
   const mv = maxView();
+  // 鎖住格子的提示與動作，依三段式狀態決定
+  let lockLabel, lockAction;
+  if (!cameFromLine())   { lockLabel = "加 LINE 解鎖"; lockAction = goToLine; }
+  else if (!profile)     { lockLabel = "填資料解鎖"; lockAction = openFormModal; }
+  else                   { lockLabel = "回 LINE 領下一週"; lockAction = goToLine; }
   DATA.forEach((item, i) => {
     const locked = item.d > mv;
     const el = document.createElement("div");
@@ -467,8 +504,8 @@ function renderGrid(){
         <div class="wk">${item.wk}</div>
         <div class="swatch" style="${swatchStyle(item.hex)}"></div>
         <div class="cname">？？？</div>
-        <div class="lock"><span class="ico">🔒</span><span>加 LINE 解鎖</span></div>`;
-      el.addEventListener("click", goToLine);   // 點鎖住的日子 → 跳加入 LINE
+        <div class="lock"><span class="ico">🔒</span><span>${lockLabel}</span></div>`;
+      el.addEventListener("click", lockAction);   // 依狀態：加 LINE / 填資料 / 回 LINE 領下一週
     } else {
       el.innerHTML = `
         ${item.d === todayN ? '<span class="star">★ 今日</span>' : ''}
@@ -480,9 +517,10 @@ function renderGrid(){
     }
     grid.appendChild(el);
   });
-  document.getElementById("sectionHint").textContent = cameFromLine()
-    ? `已解鎖第 ${weeksUnlocked()} 週 · 想看下一週？回 LINE 跟鷹桃小秘書領 👉`
-    : `加 LINE 解鎖完整招財曆 · 每天都有今日招財穿搭 👉`;
+  document.getElementById("sectionHint").textContent =
+    profile        ? `已解鎖第 ${weeksUnlocked()} 週 · 想看下一週？回 LINE 跟鷹桃小秘書領 👉`
+    : cameFromLine() ? `已開放 3 天嚐鮮 · 填生日+Email 解鎖完整一週 🔓`
+    :                  `加 LINE 解鎖完整招財曆 · 每天都有今日招財穿搭 👉`;
 }
 
 /* ====== 彈窗：穿搭詳情 ====== */
@@ -562,7 +600,7 @@ function openFormModal(){
       <div class="m-date">✦ 本命招財色 ✦</div>
       <h3>輸入你的生日</h3>
     </div>
-    <div class="form-intro">用你的生日測出天生專屬的招財色<br>填完立刻揭曉，並把每月招財穿搭曆寄到你信箱</div>
+    <div class="form-intro">輸入生日測出你的本命招財色，並解鎖這一週每日穿搭<br>Email 用來把每月招財曆寄給你</div>
     <div class="form-body">
       <div class="bday-row">
         <select id="selYear"><option value="" disabled selected>出生年</option>${yearOpts}</select>
