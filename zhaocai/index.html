@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>招財穿搭｜每天穿對顏色，財氣自然來</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* ---- 基本設定 ---- */
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  :root {
+    --gold: #b88a3e;
+    --gold-soft: #e6d4ab;
+    --ink: #3a322a;
+    --ink-soft: #7a6f60;
+    --paper: #f6efe2;
+    --card: #ffffff;
+    --line: #ece1cd;
+  }
+  body {
+    font-family: "Noto Sans TC", system-ui, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 15% 2%, #fff8ea 0%, transparent 40%),
+      var(--paper);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Noto Serif TC", serif; }
+  .wrap { max-width: 480px; margin: 0 auto; }   /* 以手機寬度為主軸置中 */
+
+  /* ---- 封面進入畫面（點一下才進到每日卡片）---- */
+  .cover-screen {
+    position: fixed; inset: 0; z-index: 100;
+    background: #0c0a08; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity .6s ease;
+  }
+  .cover-screen img {
+    width: 100%; height: 100%; object-fit: cover;
+    object-position: center;
+  }
+  .cover-screen.fade { opacity: 0; pointer-events: none; }
+  .enter-hint {
+    position: absolute; left: 0; right: 0; bottom: calc(34px + env(safe-area-inset-bottom));
+    text-align: center; color: #fff;
+    font-size: 16px; letter-spacing: 4px; font-weight: 500;
+    text-shadow: 0 2px 12px rgba(0,0,0,.55);
+    animation: breathe 2.4s ease-in-out infinite;
+  }
+  .enter-hint .pill {
+    display: inline-block; padding: 10px 26px;
+    border: 1px solid rgba(255,255,255,.65); border-radius: 999px;
+    backdrop-filter: blur(2px); background: rgba(0,0,0,.15);
+  }
+  @keyframes breathe { 0%,100% { opacity: .55; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-4px); } }
+
+  /* ---- 內容區進場 ---- */
+  #content { display: none; animation: fadein .6s ease both; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* 內容區頂部小標題 */
+  .topbar { text-align: center; padding: 26px 24px 2px; }
+  .topbar .eyebrow { letter-spacing: 5px; font-size: 12px; color: var(--gold); font-weight: 700; }
+  .topbar h1 { font-family: "Noto Serif TC", serif; font-size: 30px; letter-spacing: 1px; margin-top: 6px; }
+  .topbar h1 .accent { color: var(--gold); }
+
+  /* ---- 介紹小段 ---- */
+  .intro { text-align: center; padding: 18px 28px 4px; }
+  .intro .divider {
+    width: 54px; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 16px; border-radius: 2px;
+  }
+  .intro p { color: var(--ink-soft); font-size: 15px; }
+
+  /* ---- 今日精選 ---- */
+  .today-wrap { padding: 22px 18px 4px; }
+  .today-card {
+    background: linear-gradient(135deg, #fffdf7, #f8eed7);
+    border: 1px solid var(--gold-soft);
+    border-radius: 22px; padding: 22px 22px 24px;
+    box-shadow: 0 16px 36px -22px rgba(150,110,30,.5);
+    display: flex; gap: 18px; align-items: center; cursor: pointer;
+  }
+  .today-card .tag {
+    display: inline-block; background: var(--gold); color: #fff;
+    font-size: 12px; font-weight: 700; letter-spacing: 2px;
+    padding: 4px 12px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .today-swatch { width: 84px; height: 84px; border-radius: 50%; flex-shrink: 0; }
+  .today-info { flex: 1; min-width: 0; }
+  .today-info .date { font-size: 14px; color: var(--ink-soft); }
+  .today-info h2 { font-family: "Noto Serif TC", serif; font-size: 24px; margin: 2px 0 6px; }
+  .today-info .reason {
+    font-size: 14px; color: var(--ink-soft);
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+
+  /* ---- 本命招財色 鉤子卡（拿生日）---- */
+  .destiny-wrap { padding: 22px 18px 4px; }
+  .destiny-gate {
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #2b2b3a, #4a3b5c 55%, #6a4b3a);
+    border-radius: 22px; padding: 26px 24px;
+    box-shadow: 0 18px 40px -22px rgba(60,40,90,.7);
+    text-align: center; color: #fff;
+  }
+  .destiny-gate::after {
+    content: ""; position: absolute; top: -40%; right: -20%;
+    width: 220px; height: 220px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,221,150,.35), transparent 70%);
+  }
+  .destiny-gate .dg-eyebrow { letter-spacing: 4px; font-size: 12px; color: #f3d9a6; font-weight: 700; }
+  .destiny-gate h3 { font-family: "Noto Serif TC", serif; font-size: 23px; margin: 8px 0 6px; }
+  .destiny-gate p { font-size: 14px; color: rgba(255,255,255,.82); margin-bottom: 18px; }
+  .destiny-gate .dg-btn {
+    display: inline-block; border: none; cursor: pointer;
+    background: linear-gradient(135deg, #f3d9a6, #d4af7a);
+    color: #4a2f12; font-weight: 700; font-size: 16px; letter-spacing: 1px;
+    padding: 13px 30px; border-radius: 999px;
+    box-shadow: 0 10px 22px -8px rgba(0,0,0,.5); transition: transform .15s;
+  }
+  .destiny-gate .dg-btn:active { transform: scale(.95); }
+  .destiny-gate .dg-foot { margin-top: 12px; font-size: 12px; color: rgba(255,255,255,.6); }
+
+  /* 已解鎖後的本命色小卡 */
+  .destiny-result {
+    background: linear-gradient(135deg, #fffdf7, #f4ead2);
+    border: 1px solid var(--gold-soft); border-radius: 22px;
+    padding: 20px 22px; box-shadow: 0 16px 36px -22px rgba(150,110,30,.5);
+    display: flex; gap: 16px; align-items: center;
+  }
+  .destiny-result .dr-swatch { width: 70px; height: 70px; border-radius: 50%; flex-shrink: 0; }
+  .destiny-result .dr-eyebrow { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: 2px; }
+  .destiny-result h4 { font-family: "Noto Serif TC", serif; font-size: 21px; margin: 2px 0; }
+  .destiny-result .dr-sub { font-size: 13px; color: var(--ink-soft); }
+
+  /* ---- 月曆網格 ---- */
+  .section-title { text-align: center; margin: 34px 0 6px; font-family: "Noto Serif TC", serif; font-size: 21px; letter-spacing: 2px; }
+  .section-hint { text-align: center; color: var(--ink-soft); font-size: 13px; margin-bottom: 18px; }
+  .grid { padding: 0 14px 60px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .day {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 15px 8px 16px; cursor: pointer; text-align: center; position: relative;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s;
+  }
+  .day:active { transform: scale(.96); }
+  .day.is-today { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold-soft); }
+  .day .star { position: absolute; top: 8px; right: 9px; font-size: 11px; color: var(--gold); font-weight: 700; }
+  .day .dnum { font-family: "Noto Serif TC", serif; font-size: 23px; font-weight: 700; line-height: 1; }
+  .day .wk { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+  .day .swatch { width: 48px; height: 48px; border-radius: 50%; margin: 12px auto 8px; }
+  .day .cname { font-size: 14px; font-weight: 700; }
+
+  /* 鎖住的未來日子 */
+  .day.locked { cursor: pointer; }
+  .day.locked .dnum, .day.locked .wk, .day.locked .swatch, .day.locked .cname { opacity: .28; filter: grayscale(.6); }
+  .day.locked .lock {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 4px;
+    color: var(--ink-soft); font-size: 12px; font-weight: 500;
+  }
+  .day.locked .lock .ico { font-size: 22px; opacity: .55; }
+
+  /* ---- 彈窗（共用：穿搭詳情 / 生日表單 / 本命揭曉）---- */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(40,34,26,.6);
+    backdrop-filter: blur(3px); display: none;
+    align-items: flex-end; justify-content: center; z-index: 50;
+  }
+  .overlay.open { display: flex; }
+  .modal {
+    background: var(--card); border-radius: 26px 26px 0 0;
+    width: 100%; max-width: 480px; max-height: 92vh; overflow-y: auto;
+    padding: 0 0 calc(28px + env(safe-area-inset-bottom));
+    box-shadow: 0 -10px 50px -10px rgba(0,0,0,.5);
+    animation: slideup .3s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes slideup { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-head { padding: 26px 26px 22px; text-align: center; border-bottom: 1px solid var(--line); position: relative; }
+  .modal-head .grab { width: 40px; height: 4px; background: var(--line); border-radius: 999px; margin: -10px auto 14px; }
+  .modal-head .close {
+    position: absolute; top: 16px; right: 18px; width: 34px; height: 34px;
+    border: none; background: #f2ebdc; color: var(--ink-soft);
+    border-radius: 50%; font-size: 18px; cursor: pointer;
+  }
+  .modal-head .m-date { font-size: 14px; color: var(--ink-soft); letter-spacing: 1px; }
+  .modal-head .m-swatch { width: 84px; height: 84px; border-radius: 50%; margin: 14px auto; }
+  .modal-head h3 { font-family: "Noto Serif TC", serif; font-size: 25px; }
+  .modal-head .match { margin-top: 8px; font-size: 14px; color: var(--ink-soft); }
+  .modal-body { padding: 22px 26px 0; }
+  .field { margin-bottom: 18px; }
+  .field .label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 1px; margin-bottom: 4px;
+  }
+  .field .val { font-size: 15px; }
+  .field.reason .val {
+    background: #fbf5e8; border-left: 3px solid var(--gold);
+    padding: 12px 14px; border-radius: 0 10px 10px 0; color: var(--ink-soft);
+  }
+
+  /* ---- 生日表單 ---- */
+  .form-intro { text-align: center; padding: 4px 26px 18px; color: var(--ink-soft); font-size: 14px; }
+  .form-body { padding: 0 26px; }
+  .bday-row { display: flex; gap: 10px; margin-bottom: 16px; }
+  .bday-row select {
+    flex: 1; padding: 13px 10px; font-size: 15px; font-family: inherit;
+    border: 1px solid var(--line); border-radius: 12px; background: #fcf8ef; color: var(--ink);
+    appearance: none; text-align: center;
+  }
+  .email-row { margin-bottom: 22px; }
+  .email-row input {
+    width: 100%; padding: 13px 14px; font-size: 15px; font-family: inherit;
+    border: 1px solid var(--line); border-radius: 12px; background: #fcf8ef; color: var(--ink);
+  }
+  .email-row input::placeholder { color: #b3a892; }
+  .gender-row { display: flex; gap: 10px; margin-bottom: 16px; }
+  .gender-row .g {
+    flex: 1; text-align: center; padding: 12px 0; font-size: 15px; cursor: pointer;
+    border: 1px solid var(--line); border-radius: 12px; background: #fcf8ef; color: var(--ink-soft);
+    transition: all .15s;
+  }
+  .gender-row .g.sel { border-color: var(--gold); background: #fbf2dd; color: var(--ink); font-weight: 700; }
+  .submit-btn {
+    width: 100%; border: none; cursor: pointer;
+    background: linear-gradient(135deg, #d4af7a, #b88a3e);
+    color: #fff; font-weight: 700; font-size: 17px; letter-spacing: 1px;
+    padding: 15px; border-radius: 14px; box-shadow: 0 12px 26px -10px rgba(150,110,30,.6);
+    transition: transform .15s, opacity .15s;
+  }
+  .submit-btn:active { transform: scale(.98); }
+  .submit-btn:disabled { opacity: .45; cursor: default; }
+  .form-note { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 12px; }
+
+  /* ---- 本命揭曉 ---- */
+  .reveal { text-align: center; padding: 8px 26px 4px; }
+  .reveal .big-swatch {
+    width: 120px; height: 120px; border-radius: 50%; margin: 8px auto 16px;
+    animation: pop .5s cubic-bezier(.2,.9,.3,1.2) both;
+  }
+  @keyframes pop { from { transform: scale(.3); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .reveal .r-eyebrow { letter-spacing: 4px; font-size: 12px; color: var(--gold); font-weight: 700; }
+  .reveal h3 { font-family: "Noto Serif TC", serif; font-size: 28px; margin: 6px 0 4px; }
+  .reveal .r-element { font-size: 14px; color: var(--ink-soft); margin-bottom: 16px; }
+  .reveal .r-desc {
+    text-align: left; background: #fbf5e8; border-left: 3px solid var(--gold);
+    padding: 14px 16px; border-radius: 0 12px 12px 0; color: var(--ink-soft); font-size: 14px; margin-bottom: 16px;
+  }
+  .reveal .r-noble {
+    display: flex; align-items: center; gap: 12px; text-align: left;
+    background: #f4f1ff; border-radius: 14px; padding: 14px 16px; margin-bottom: 20px;
+  }
+  .reveal .r-noble .nb-swatch { width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0; }
+  .reveal .r-noble .nb-text { font-size: 13px; color: var(--ink-soft); }
+  .reveal .r-noble .nb-text b { color: var(--ink); }
+
+  /* ---- 背景音樂按鈕（浮動）---- */
+  .music-btn {
+    position: fixed; right: 16px; bottom: calc(18px + env(safe-area-inset-bottom));
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 1px solid var(--gold-soft); background: rgba(255,255,255,.9);
+    backdrop-filter: blur(4px); cursor: pointer; z-index: 40;
+    box-shadow: 0 8px 22px -8px rgba(120,90,30,.5);
+    font-size: 22px; display: flex; align-items: center; justify-content: center; transition: transform .15s;
+  }
+  .music-btn:active { transform: scale(.9); }
+  .music-btn.playing .note { animation: spin 4s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  footer { text-align: center; padding: 8px 20px 90px; color: var(--ink-soft); font-size: 13px; }
+  footer .brand { color: var(--gold); font-weight: 700; }
+</style>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+<!-- 封面進入畫面 -->
+<div class="cover-screen" id="coverScreen">
+  <img src="cover.png" alt="招財穿搭學 · 原來氣場真的藏在顏色裡">
+  <div class="enter-hint"><span class="pill">輕觸進入 ✨</span></div>
+</div>
+
+<div class="wrap" id="content">
+
+  <div class="topbar">
+    <div class="eyebrow" id="eyebrowLabel">JUNE · 招財穿搭</div>
+    <h1 class="serif"><span id="monthLabel">六月</span><span class="accent">招財</span>穿搭</h1>
+  </div>
+
+  <div class="intro">
+    <div class="divider"></div>
+    <p>每天穿對顏色，把財氣穿在身上 ✨<br>點下方任一天，看完整招財穿搭</p>
+  </div>
+
+  <!-- 今日精選 -->
+  <div class="today-wrap">
+    <div class="today-card" id="todayCard">
+      <div class="today-swatch" id="todaySwatch"></div>
+      <div class="today-info">
+        <span class="tag" id="todayTag">今日推薦</span>
+        <div class="date" id="todayDate"></div>
+        <h2 id="todayColor"></h2>
+        <div class="reason" id="todayReason"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 本命招財色（拿生日的鉤子 / 解鎖後變成本命色小卡）-->
+  <div class="destiny-wrap" id="destinyWrap"></div>
+
+  <div class="section-title serif">— 本月招財穿搭 —</div>
+  <div class="section-hint" id="sectionHint"></div>
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    色彩招財曆 · by <span class="brand">美你的事</span><br>顏色帶來氣場，行動帶來收入 💛
+  </footer>
+</div>
+
+<!-- 背景音樂按鈕 -->
+<button class="music-btn" id="musicBtn" aria-label="背景音樂"><span class="note">🎵</span></button>
+
+<!-- 共用彈窗 -->
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+/* ====== 資料：本月 30 天招財穿搭 ====== */
+const DATA = [
+  {d:1, wk:"週一", color:"奶油白", hex:"#FBF4E4", match:"淺金、米杏色", outfit:"白色襯衫、米色寬褲、奶油色洋裝", item:"金色細項鍊、米色托特包、珍珠耳環", reason:"月初適合先把氣場整理乾淨。白色代表清爽、重啟、歸零，適合開啟新的金錢流動。搭配金色小物，可以讓整體看起來更有「穩定收入感」。"},
+  {d:2, wk:"週二", color:"橘棕色", hex:"#B5651D", match:"奶茶色、咖啡色", outfit:"橘棕上衣、咖啡色長裙、奶茶色罩衫", item:"棕色皮帶、咖啡色包包、木質手環", reason:"橘棕色有行動力，也有親和力。今天適合談合作、開會、發訊息邀約。它不是衝動的紅，而是有溫度的推進，適合讓人願意靠近你。"},
+  {d:3, wk:"週三", color:"深藍色", hex:"#1F3A5F", match:"白色、銀色", outfit:"深藍襯衫、西裝褲、藍白條紋上衣", item:"銀色手錶、深藍髮夾、白色包款", reason:"深藍色代表專業、冷靜、判斷力。今天適合處理報價、合約、客戶溝通，不要太花俏，越乾淨越容易給人信任感。"},
+  {d:4, wk:"週四", color:"豆沙粉", hex:"#C98B8B", match:"玫瑰金、米白色", outfit:"豆沙粉上衣、米白裙、粉色針織外套", item:"玫瑰金耳環、粉色髮圈、小巧手拿包", reason:"今天的財不是硬搶來的，而是靠人緣帶來的。豆沙粉比亮粉色成熟，不會幼稚，適合用溫柔感增加好感度，特別適合服務業、美業、銷售溝通。"},
+  {d:5, wk:"週五", color:"墨綠色", hex:"#2E4A3C", match:"金色、米色", outfit:"墨綠洋裝、綠色襯衫、米色寬褲", item:"金色戒指、綠色絲巾、米色包", reason:"墨綠色有「穩定累積」的感覺。今天適合整理財務、規劃預算、談長期合作。它不是暴富色，而是能讓人覺得你可靠、有底氣。"},
+  {d:6, wk:"週六", color:"蜜桃橘", hex:"#FF9E80", match:"白色、淺咖色", outfit:"蜜桃橘上衣、白色牛仔褲、淺咖色短外套", item:"橘色手機殼、白色小包、咖色涼鞋", reason:"週末適合增加曝光與社交能量。蜜桃橘有活潑感，容易讓人注意到你，但不會太強勢。適合拍照、直播、聚會、發限動。"},
+  {d:7, wk:"週日", color:"燕麥色", hex:"#D9C9A8", match:"奶茶色、淺金色", outfit:"燕麥色套裝、奶茶色洋裝、針織背心", item:"金色細手鍊、奶茶色包包、裸色鞋", reason:"今天適合讓自己慢下來。燕麥色給人柔和、穩定、好相處的感覺。它的招財不是靠衝，而是讓你恢復狀態，隔天才有力氣繼續賺錢。"},
+  {d:8, wk:"週一", color:"正紅色", hex:"#D32F2F", match:"黑色、金色", outfit:"紅色上衣、黑色長褲、紅色洋裝", item:"金色耳環、紅色口紅、黑金包款", reason:"今天適合強勢開局。紅色有吸睛、啟動、增加存在感的效果。但紅色不要全身亂穿，最好只讓一個地方成為重點，否則容易變成壓迫感。"},
+  {d:9, wk:"週二", color:"淺灰色", hex:"#C7CCD1", match:"白色、銀色", outfit:"灰色西裝外套、白色內搭、灰白套裝", item:"銀色手錶、灰色托特包、白色皮鞋", reason:"灰色代表理性與平衡。今天適合面對需要談判、比價、分析的事情。穿得太情緒化反而不利，乾淨的灰白配色會讓你看起來更清醒。"},
+  {d:10, wk:"週三", color:"香檳金", hex:"#D4AF7A", match:"奶油白、咖啡色", outfit:"香檳金飾品、米白洋裝、咖色裙裝", item:"金色髮夾、香檳色包包、細緻戒指", reason:"香檳金比亮金色更高級，適合提升貴人運與質感。今天適合見重要客戶、談價格、做品牌曝光。重點是「貴氣」，不是浮誇。"},
+  {d:11, wk:"週四", color:"天空藍", hex:"#87CEEB", match:"白色、淺灰色", outfit:"天空藍襯衫、白褲、藍白洋裝", item:"藍色絲巾、白色小包、銀色耳環", reason:"天空藍有溝通順暢的意味。今天適合寫文案、談課程、拍影片、錄音、開會。它讓人感覺清爽，適合把複雜的事情說得簡單。"},
+  {d:12, wk:"週五", color:"巧克力棕", hex:"#5A3A22", match:"米白色、金色", outfit:"棕色襯衫、米色長裙、咖啡色西裝褲", item:"棕色皮包、金色耳扣、皮革錶帶", reason:"巧克力棕有成熟、穩重、可靠的感覺。今天適合談長線合作、續約、老客戶回購。不要穿得太可愛，今天越穩，越容易讓人願意買單。"},
+  {d:13, wk:"週六", color:"粉紫色", hex:"#C9A9D4", match:"白色、銀色", outfit:"粉紫上衣、白裙、淡紫色洋裝", item:"紫色髮飾、銀色項鍊、白色包款", reason:"粉紫色有柔和的吸引力，適合做個人魅力與內容曝光。今天不適合太硬推銷，適合用故事、感受、生活感讓人靠近你。"},
+  {d:14, wk:"週日", color:"森林綠", hex:"#2F5233", match:"奶茶色、白色", outfit:"森林綠襯衫、白色寬褲、綠色背心", item:"綠色帆布包、木質飾品、奶茶色帽子", reason:"森林綠代表修復與生長。今天適合沉澱、整理內容、規劃下週。招財不一定是今天成交，而是把你的根打穩，讓後面的財更容易長出來。"},
+  {d:15, wk:"週一", color:"黑色", hex:"#1A1A1A", match:"金色、白色", outfit:"黑色西裝、黑色洋裝、白襯衫搭黑褲", item:"金色耳環、黑色皮包、白色手錶", reason:"黑色代表權威與界線。今天適合談條件、設定規則、拒絕不合理要求。招財不是只會吸引錢，有時候是先停止被消耗。"},
+  {d:16, wk:"週二", color:"檸檬黃", hex:"#F5E050", match:"白色、淺灰色", outfit:"黃色上衣、白褲、黃色針織外套", item:"黃色髮夾、白色包、銀色戒指", reason:"檸檬黃有開朗、提亮、增加注意力的效果。今天適合做曝光、發新品、拍短影片。它會讓人覺得你有活力，但要避免大面積太刺眼。"},
+  {d:17, wk:"週三", color:"酒紅色", hex:"#6E1423", match:"黑色、深咖色", outfit:"酒紅襯衫、黑裙、酒紅針織衫", item:"酒紅包、深色皮鞋、金色耳飾", reason:"酒紅色有成熟魅力，也有深度感。今天適合談高單價商品、課程、顧問服務。它給人的感覺不是便宜熱鬧，而是值得被認真看待。"},
+  {d:18, wk:"週四", color:"米杏色", hex:"#E6D5B8", match:"淡咖色、珍珠白", outfit:"米杏色洋裝、淡咖色長褲、白色襯衫", item:"珍珠耳環、米色包包、裸色高跟鞋", reason:"米杏色有親和、耐看、舒服的氣場。今天適合服務顧客、做回訪、經營關係。真正長久的財，很多時候不是一次成交，而是人願意一直相信你。"},
+  {d:19, wk:"週五", color:"銀白色", hex:"#E8EBED", match:"淺藍色、灰色", outfit:"白色套裝、銀灰上衣、淺藍襯衫", item:"銀色包、銀色耳環、金屬髮夾", reason:"銀白色適合清理混亂與提升判斷力。今天適合整理帳目、檢查訂單、處理系統資料。這天的招財關鍵不是多賣，而是少出錯。"},
+  {d:20, wk:"週六", color:"珊瑚橘", hex:"#FF7F5C", match:"白色、淺棕色", outfit:"珊瑚橘洋裝、白色短褲、橘色襯衫", item:"橘色小包、棕色涼鞋、金色手鍊", reason:"珊瑚橘有社交溫度，很適合週末聚會、直播、活動。今天適合讓人看到你生活中的亮點，財運來自「有人想靠近你」。"},
+  {d:21, wk:"週日", color:"薰衣草紫", hex:"#B59FD0", match:"白色、淺灰色", outfit:"紫色上衣、白裙、灰紫色洋裝", item:"紫色髮帶、銀色戒指、小香風包", reason:"薰衣草紫有安定情緒與提升氣質的感覺。今天適合休息、充電、寫內在型內容。不是每天都要拼，會休息的人，才不會把賺錢變成耗損。"},
+  {d:22, wk:"週一", color:"軍綠色", hex:"#4B5320", match:"黑色、卡其色", outfit:"軍綠襯衫、卡其褲、黑色背心", item:"黑色腰包、皮革手環、卡其帽", reason:"軍綠色有執行力與穩定感。今天適合跑業務、執行計畫、做陌生開發。這不是柔弱的顏色，是提醒你：不要只想，要動。"},
+  {d:23, wk:"週二", color:"玫瑰粉", hex:"#E8A0B0", match:"米白色、玫瑰金", outfit:"玫瑰粉上衣、米白寬褲、粉色洋裝", item:"玫瑰金項鍊、粉色手帳、米色包", reason:"玫瑰粉適合提升人緣與好感。今天適合做私訊邀約、客戶關心、社群互動。它的招財邏輯是：先讓人願意回你，後面才有成交。"},
+  {d:24, wk:"週三", color:"海軍藍", hex:"#1C2E4A", match:"白色、金色", outfit:"海軍藍西裝、白襯衫、藍色長裙", item:"金色胸針、白色包、藍色絲巾", reason:"海軍藍比普通藍更有權威感。今天適合做正式發表、提案、課程說明、報價。它會讓你看起來不是在求別人買，而是在提供值得信任的選擇。"},
+  {d:25, wk:"週四", color:"焦糖色", hex:"#B8742A", match:"米色、咖啡色", outfit:"焦糖色上衣、米色長裙、咖啡色套裝", item:"焦糖色皮包、咖啡色皮鞋、金色戒指", reason:"焦糖色有溫暖、穩定、成熟的氛圍。今天適合經營老顧客、做回購活動、建立信任。這種顏色最適合賣「長期陪伴型」商品。"},
+  {d:26, wk:"週五", color:"亮白色", hex:"#FFFFFF", match:"金色、淺藍色", outfit:"白襯衫、白洋裝、白色套裝", item:"金色耳環、淺藍包、白色鞋", reason:"亮白色很適合在週五做收尾與整理。它讓人看起來乾淨、有精神，也適合面對新客戶。招財關鍵是讓人覺得你清楚、可信、不混亂。"},
+  {d:27, wk:"週六", color:"葡萄紫", hex:"#5B2C6F", match:"黑色、銀色", outfit:"紫色上衣、黑色長裙、紫黑洋裝", item:"銀色耳環、紫色包包、黑色髮夾", reason:"葡萄紫有神秘感與記憶點。今天適合出席活動、拍照、製造辨識度。你不需要討好所有人，但要讓對的人記得你。"},
+  {d:28, wk:"週日", color:"淺卡其", hex:"#C3B091", match:"白色、奶茶色", outfit:"卡其襯衫、白色長褲、奶茶色洋裝", item:"卡其帽、白色帆布包、木質耳環", reason:"淺卡其有自然、舒服、不費力的感覺。今天適合生活感內容、戶外拍照、慢節奏經營。不是所有財都來自強勢，有些財來自你真實、不裝。"},
+  {d:29, wk:"週一", color:"孔雀藍", hex:"#1A7B8C", match:"金色、米白色", outfit:"孔雀藍襯衫、米白裙、藍色洋裝", item:"金色耳飾、藍色包包、米色高跟鞋", reason:"孔雀藍有獨特感，適合在月底前創造亮點。今天適合做主題發文、開直播、發限動互動。它不是安全色，但有辨識度，適合讓人停下來看你。"},
+  {d:30, wk:"週二", color:"金棕色", hex:"#9A6B2F", match:"黑色、奶油白", outfit:"金棕上衣、黑色長褲、白色襯衫外搭棕色背心", item:"金色手鍊、棕色皮包、黑色皮鞋", reason:"月底適合收成、結算、穩住成果。金棕色有成熟財氣，不浮誇但很有存在感。今天適合做成交收尾、業績整理、月底感謝文。"}
+];
+
+/* ====== 本命招財色引擎（生肖 → 五行 → 招財色）======
+   白話：用出生年算生肖，生肖對應五行，五行給一個本命招財主色，
+   再用「生我者為貴人」給一個貴人色。先放在前端，之後會搬到後台的 lib 共用。 */
+const ZODIAC = ["鼠","牛","虎","兔","龍","蛇","馬","羊","猴","雞","狗","豬"];
+const ZODIAC_ELEMENT = {鼠:"水",牛:"土",虎:"木",兔:"木",龍:"土",蛇:"火",馬:"火",羊:"土",猴:"金",雞:"金",狗:"土",豬:"水"};
+const ELEMENT_FORTUNE = {
+  木: { color:"森林綠", hex:"#2F5233", noble:"海軍藍", nobleHex:"#1C2E4A",
+        desc:"你的本命屬木，財氣來自「開創與成長」。穿對綠色系，你做企劃、開發新客、推新案時會更有底氣，讓人感覺你正在往上長。" },
+  火: { color:"正紅色", hex:"#D32F2F", noble:"森林綠", nobleHex:"#2F5233",
+        desc:"你的本命屬火，財氣來自「熱度與曝光」。紅色系幫你在鏡頭前、舞台上、銷售現場更亮眼，讓人記得住你、願意買單。" },
+  土: { color:"焦糖色", hex:"#B8742A", noble:"正紅色", nobleHex:"#D32F2F",
+        desc:"你的本命屬土，財氣來自「信任與累積」。大地色系讓你顯得穩重可靠，特別適合經營老顧客、做長期回購、談續約。" },
+  金: { color:"香檳金", hex:"#D4AF7A", noble:"焦糖色", nobleHex:"#B8742A",
+        desc:"你的本命屬金，財氣來自「質感與貴人」。金色系提升你的貴氣與說服力，談價格、見重要客戶、做品牌時最吃香。" },
+  水: { color:"海軍藍", hex:"#1C2E4A", noble:"香檳金", nobleHex:"#D4AF7A",
+        desc:"你的本命屬水，財氣來自「靈活與溝通」。藍色系讓你思路清晰、表達順暢，談合作、寫文案、做提案特別有說服力。" },
+};
+function destinyByBirthday(year){
+  const z = ZODIAC[((year - 4) % 12 + 12) % 12];
+  const el = ZODIAC_ELEMENT[z];
+  const f = ELEMENT_FORTUNE[el];
+  return { zodiac: z, element: el, ...f };
+}
+
+/* 淺色圓點補細邊框，避免在白底上看不見 */
+function swatchStyle(hex){
+  const light = ["#FFFFFF","#FBF4E4","#E8EBED","#F5E050","#D9C9A8","#E6D5B8","#87CEEB","#C7CCD1","#D4AF7A","#C3B091","#FF9E80","#E8A0B0"].includes(hex.toUpperCase());
+  const ring = light ? "0 0 0 1px #e2d9c4 inset," : "";
+  return `background:${hex};box-shadow:${ring}inset 0 0 0 3px rgba(255,255,255,.6),0 6px 14px -6px rgba(0,0,0,.28);`;
+}
+
+/* ====== 狀態：是否已填生日解鎖 ====== */
+const STORE_KEY = "zhaocai_profile";
+function loadProfile(){ try { return JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch(e){ return null; } }
+function saveProfile(p){ localStorage.setItem(STORE_KEY, JSON.stringify(p)); }
+let profile = loadProfile();   // { year, month, day, gender }
+
+/* 今天是幾月幾號；未解鎖最多看到隔天，解鎖後整月全開 */
+const now = new Date();
+const monthIdx = now.getMonth();           // 0-11
+const MONTH_CN = ["一","二","三","四","五","六","七","八","九","十","十一","十二"];
+const monthName = MONTH_CN[monthIdx] + "月";
+let todayN = now.getDate();
+if (todayN > 30) todayN = 30;
+function maxView(){ return profile ? 30 : Math.min(todayN + 1, 30); }
+
+document.getElementById("monthLabel").textContent = monthName;
+document.getElementById("eyebrowLabel").textContent = monthName.toUpperCase ? "招財穿搭" : "招財穿搭";
+document.getElementById("eyebrowLabel").textContent = monthName + " · 招財穿搭";
+
+/* ---- 今日精選 ---- */
+const t = DATA[todayN - 1];
+document.getElementById("todaySwatch").style.cssText = swatchStyle(t.hex);
+document.getElementById("todayTag").textContent = `${monthIdx+1}/${t.d} 今日推薦`;
+document.getElementById("todayDate").textContent = `${monthIdx+1}月${t.d}日 ${t.wk}`;
+document.getElementById("todayColor").innerHTML = `招財主色　<span style="color:var(--gold)">${t.color}</span>`;
+document.getElementById("todayReason").textContent = t.reason;
+document.getElementById("todayCard").addEventListener("click", () => openDayModal(todayN - 1));
+
+/* ---- 本命招財色區塊（依是否解鎖切換）---- */
+function renderDestiny(){
+  const box = document.getElementById("destinyWrap");
+  if (profile) {
+    const d = destinyByBirthday(profile.year);
+    box.innerHTML = `
+      <div class="destiny-result" id="destinyResult">
+        <div class="dr-swatch" style="${swatchStyle(d.hex)}"></div>
+        <div>
+          <div class="dr-eyebrow">你的本命招財色 · ${d.zodiac}（${d.element}）</div>
+          <h4>${d.color}</h4>
+          <div class="dr-sub">貴人色：${d.noble}　·　點看完整解讀</div>
+        </div>
+      </div>`;
+    document.getElementById("destinyResult").addEventListener("click", () => openRevealModal(d, false));
+  } else {
+    box.innerHTML = `
+      <div class="destiny-gate">
+        <div class="dg-eyebrow">✦ 命中註定的招財色 ✦</div>
+        <h3>你的「本命招財色」是哪一色？</h3>
+        <p>每個人天生就有一個專屬招財色<br>輸入生日，30 秒測出你的本命色</p>
+        <button class="dg-btn" id="gateBtn">免費測我的本命招財色 →</button>
+        <div class="dg-foot">測完同時解鎖整月每日穿搭 🔓</div>
+      </div>`;
+    document.getElementById("gateBtn").addEventListener("click", openFormModal);
+  }
+}
+
+/* ---- 月曆網格 ---- */
+function renderGrid(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  const mv = maxView();
+  DATA.forEach((item, i) => {
+    const locked = item.d > mv;
+    const el = document.createElement("div");
+    el.className = "day" + (item.d === todayN ? " is-today" : "") + (locked ? " locked" : "");
+    if (locked) {
+      el.innerHTML = `
+        <div class="dnum">${item.d}</div>
+        <div class="wk">${item.wk}</div>
+        <div class="swatch" style="${swatchStyle(item.hex)}"></div>
+        <div class="cname">？？？</div>
+        <div class="lock"><span class="ico">🔒</span><span>填生日解鎖</span></div>`;
+      el.addEventListener("click", openFormModal);   // 點鎖住的日子 → 引導填生日
+    } else {
+      el.innerHTML = `
+        ${item.d === todayN ? '<span class="star">★ 今日</span>' : ''}
+        <div class="dnum">${item.d}</div>
+        <div class="wk">${item.wk}</div>
+        <div class="swatch" style="${swatchStyle(item.hex)}"></div>
+        <div class="cname">${item.color}</div>`;
+      el.addEventListener("click", () => openDayModal(i));
+    }
+    grid.appendChild(el);
+  });
+  document.getElementById("sectionHint").textContent = profile
+    ? "已解鎖整月 · 每天回來看今日招財色 ✨"
+    : `目前開放到 ${monthIdx+1}/${mv} · 填生日解鎖整月`;
+}
+
+/* ====== 彈窗：穿搭詳情 ====== */
+const overlay = document.getElementById("overlay");
+const modal = document.getElementById("modal");
+function openDayModal(i){
+  const x = DATA[i];
+  modal.innerHTML = `
+    <div class="modal-head">
+      <div class="grab"></div>
+      <button class="close" onclick="closeModal()">×</button>
+      <div class="m-date">${monthIdx+1}月${x.d}日 · ${x.wk}</div>
+      <div class="m-swatch" style="${swatchStyle(x.hex)}"></div>
+      <h3>招財主色｜${x.color}</h3>
+      <div class="match">搭配色：${x.match}</div>
+    </div>
+    <div class="modal-body">
+      <div class="field"><div class="label">👗 穿搭建議</div><div class="val">${x.outfit}</div></div>
+      <div class="field"><div class="label">💍 穿搭小物</div><div class="val">${x.item}</div></div>
+      <div class="field reason"><div class="label">💰 招財原因</div><div class="val">${x.reason}</div></div>
+    </div>`;
+  openModal();
+}
+
+/* ======================================================================
+   設定區（每開一個新主題頁，只要改這裡 + 上面的 DATA 內容）
+   ====================================================================== */
+const CONFIG = {
+  TOPIC: "招財穿搭",          // 名單試算表會記這個主題，方便區分招財穿搭/風水…
+  // Google Apps Script 網址（送名單用）。等試算表建好把網址貼這裡：
+  SHEET_WEBHOOK: "",
+  LIFF_ID: "2010278875-7X46fusb",   // LINE LIFF（在 LINE 裡開才會生效）
+};
+
+/* LIFF 初始化：在 LINE 裡開才拿得到使用者身分，一般瀏覽器跑不起來就略過 */
+(function initLiff(){
+  if (!CONFIG.LIFF_ID || !window.liff) return;
+  liff.init({ liffId: CONFIG.LIFF_ID })
+    .then(() => { if (!liff.isLoggedIn() && liff.isInClient()) liff.login(); })
+    .catch(() => {});
+})();
+async function getLineUserId(){
+  try {
+    if (window.liff && liff.getProfile) {
+      const p = await liff.getProfile();
+      return p.userId;
+    }
+  } catch(e){}
+  return null;
+}
+
+/* 把一筆名單送進 Google 試算表（form-encoded，避開 CORS 預檢） */
+async function sendLead(payload){
+  if (!CONFIG.SHEET_WEBHOOK) return;   // 還沒接試算表就先不送，不影響使用者
+  try {
+    const body = new URLSearchParams();
+    Object.keys(payload).forEach(k => body.append(k, payload[k] == null ? "" : String(payload[k])));
+    await fetch(CONFIG.SHEET_WEBHOOK, { method:"POST", body });
+  } catch(e){}
+}
+
+/* ====== 彈窗：生日表單 ====== */
+let formState = { year:"", month:"", day:"", gender:"", email:"" };
+const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
+function openFormModal(){
+  formState = { year:"", month:"", day:"", gender:"", email:"" };
+  const years = [];
+  const thisYear = now.getFullYear();
+  for (let y = thisYear - 12; y >= thisYear - 75; y--) years.push(y);
+  const yearOpts = years.map(y => `<option value="${y}">${y} 年</option>`).join("");
+  const monthOpts = Array.from({length:12}, (_,i)=>`<option value="${i+1}">${i+1} 月</option>`).join("");
+  const dayOpts = Array.from({length:31}, (_,i)=>`<option value="${i+1}">${i+1} 日</option>`).join("");
+  modal.innerHTML = `
+    <div class="modal-head">
+      <div class="grab"></div>
+      <button class="close" onclick="closeModal()">×</button>
+      <div class="m-date">✦ 本命招財色 ✦</div>
+      <h3>輸入你的生日</h3>
+    </div>
+    <div class="form-intro">用你的生日測出天生專屬的招財色<br>填完立刻揭曉，並把每月招財穿搭曆寄到你信箱</div>
+    <div class="form-body">
+      <div class="bday-row">
+        <select id="selYear"><option value="" disabled selected>出生年</option>${yearOpts}</select>
+        <select id="selMonth"><option value="" disabled selected>月</option>${monthOpts}</select>
+        <select id="selDay"><option value="" disabled selected>日</option>${dayOpts}</select>
+      </div>
+      <div class="gender-row">
+        <div class="g" data-g="female">女生</div>
+        <div class="g" data-g="male">男生</div>
+        <div class="g" data-g="other">不透露</div>
+      </div>
+      <div class="email-row">
+        <input id="selEmail" type="email" inputmode="email" autocomplete="email" placeholder="你的 Email（寄專屬招財曆給你）" />
+      </div>
+      <button class="submit-btn" id="submitBtn" disabled>揭曉我的本命招財色 ✨</button>
+      <div class="form-note">只用來算你的招財色、寄招財曆給你，不會外流 🔒</div>
+    </div>`;
+  const check = () => {
+    formState.year = document.getElementById("selYear").value;
+    formState.month = document.getElementById("selMonth").value;
+    formState.day = document.getElementById("selDay").value;
+    formState.email = document.getElementById("selEmail").value.trim();
+    document.getElementById("submitBtn").disabled =
+      !(formState.year && formState.month && formState.day && formState.gender && isEmail(formState.email));
+  };
+  ["selYear","selMonth","selDay"].forEach(id => document.getElementById(id).addEventListener("change", check));
+  document.getElementById("selEmail").addEventListener("input", check);
+  modal.querySelectorAll(".gender-row .g").forEach(g => g.addEventListener("click", () => {
+    modal.querySelectorAll(".gender-row .g").forEach(x => x.classList.remove("sel"));
+    g.classList.add("sel"); formState.gender = g.dataset.g; check();
+  }));
+  document.getElementById("submitBtn").addEventListener("click", submitBirthday);
+  openModal();
+}
+
+async function submitBirthday(){
+  profile = {
+    year: parseInt(formState.year, 10),
+    month: parseInt(formState.month, 10),
+    day: parseInt(formState.day, 10),
+    gender: formState.gender,
+    email: formState.email
+  };
+  saveProfile(profile);
+  const d = destinyByBirthday(profile.year);
+  // 送一筆名單進 Google 試算表（含主題，方便招財穿搭/風水…分開看）
+  sendLead({
+    topic: CONFIG.TOPIC,
+    email: profile.email,
+    birthday: `${profile.year}/${profile.month}/${profile.day}`,
+    gender: profile.gender,
+    zodiac: d.zodiac,
+    element: d.element,
+    destinyColor: d.color,
+    lineUserId: await getLineUserId(),
+    submittedAt: new Date().toISOString()
+  });
+  openRevealModal(d, true);
+  renderDestiny();
+  renderGrid();
+}
+
+/* ====== 彈窗：本命揭曉 ====== */
+function openRevealModal(d, justUnlocked){
+  modal.innerHTML = `
+    <div class="modal-head">
+      <div class="grab"></div>
+      <button class="close" onclick="closeModal()">×</button>
+      <div class="m-date">✦ 你的本命招財色 ✦</div>
+    </div>
+    <div class="reveal">
+      <div class="big-swatch" style="${swatchStyle(d.hex)}"></div>
+      <div class="r-eyebrow">生肖 ${d.zodiac} · 五行屬${d.element}</div>
+      <h3>${d.color}</h3>
+      <div class="r-element">這是最旺你的招財主色</div>
+      <div class="r-desc">${d.desc}</div>
+      <div class="r-noble">
+        <div class="nb-swatch" style="${swatchStyle(d.nobleHex)}"></div>
+        <div class="nb-text">遇到重要場合，加一點 <b>${d.noble}</b> 當貴人色，幫你帶來貴人運與助力。</div>
+      </div>
+      ${justUnlocked ? `<button class="submit-btn" onclick="closeModal()">太準了！開始看每日穿搭 🔓</button>` : ``}
+    </div>`;
+  openModal();
+}
+
+function openModal(){ overlay.classList.add("open"); document.body.style.overflow = "hidden"; }
+function closeModal(){ overlay.classList.remove("open"); document.body.style.overflow = ""; }
+overlay.addEventListener("click", e => { if (e.target === overlay) closeModal(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+
+/* 初次渲染 */
+renderDestiny();
+renderGrid();
+
+/* ====== 點封面進入 → 切到每日卡片，並自動放音樂 ====== */
+const coverScreen = document.getElementById("coverScreen");
+coverScreen.addEventListener("click", () => {
+  document.getElementById("content").style.display = "block";
+  coverScreen.classList.add("fade");
+  setTimeout(() => coverScreen.remove(), 650);
+  startMusic();
+  musicBtn.classList.add("playing");
+  musicBtn.querySelector(".note").textContent = "🎵";
+});
+
+/* ====== 輕鬆背景音樂（瀏覽器即時合成，免外部檔案）====== */
+let audioCtx = null, master = null, delay = null, padTimer = null, melodyTimer = null, playing = false;
+const CHORDS = [
+  [261.63, 329.63, 392.00], [220.00, 261.63, 329.63],
+  [174.61, 220.00, 261.63], [196.00, 246.94, 293.66],
+];
+const MELODY = [523.25, 587.33, 659.25, 783.99, 880.00];
+let chordIdx = 0;
+function setupAudio(){
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  master = audioCtx.createGain(); master.gain.value = 0.0;
+  delay = audioCtx.createDelay(); delay.delayTime.value = 0.45;
+  const feedback = audioCtx.createGain(); feedback.gain.value = 0.32;
+  const wet = audioCtx.createGain(); wet.gain.value = 0.5;
+  delay.connect(feedback).connect(delay);
+  delay.connect(wet).connect(master);
+  master.connect(audioCtx.destination);
+  master.gain.linearRampToValueAtTime(0.7, audioCtx.currentTime + 2.5);
+}
+function voice(freq, time, dur, level, toDelay){
+  const osc = audioCtx.createOscillator();
+  const osc2 = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  const lp = audioCtx.createBiquadFilter();
+  lp.type = "lowpass"; lp.frequency.value = 1600;
+  osc.type = "triangle"; osc.frequency.value = freq;
+  osc2.type = "sine"; osc2.frequency.value = freq * 1.005;
+  gain.gain.setValueAtTime(0, time);
+  gain.gain.linearRampToValueAtTime(level, time + dur * 0.25);
+  gain.gain.exponentialRampToValueAtTime(0.0001, time + dur);
+  osc.connect(gain); osc2.connect(gain);
+  gain.connect(lp); lp.connect(master);
+  if (toDelay) lp.connect(delay);
+  osc.start(time); osc2.start(time);
+  osc.stop(time + dur); osc2.stop(time + dur);
+}
+function schedulePad(){
+  const chord = CHORDS[chordIdx % CHORDS.length]; chordIdx++;
+  const nowT = audioCtx.currentTime;
+  chord.forEach(f => voice(f, nowT, 8.5, 0.07, false));
+  padTimer = setTimeout(schedulePad, 7000);
+}
+function scheduleMelody(){
+  if (Math.random() < 0.75){
+    const f = MELODY[Math.floor(Math.random() * MELODY.length)];
+    voice(f, audioCtx.currentTime, 3.4, 0.09, true);
+  }
+  melodyTimer = setTimeout(scheduleMelody, 2200 + Math.random() * 2400);
+}
+function startMusic(){
+  if (playing) return;
+  if (!audioCtx) setupAudio();
+  if (audioCtx.state === "suspended") audioCtx.resume();
+  playing = true; schedulePad(); scheduleMelody();
+}
+function stopMusic(){
+  if (!playing) return;
+  playing = false;
+  clearTimeout(padTimer); clearTimeout(melodyTimer);
+  if (master) master.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 0.8);
+}
+const musicBtn = document.getElementById("musicBtn");
+musicBtn.addEventListener("click", () => {
+  if (!playing){
+    if (master) master.gain.linearRampToValueAtTime(0.7, audioCtx.currentTime + 1.2);
+    startMusic();
+    musicBtn.classList.add("playing");
+    musicBtn.querySelector(".note").textContent = "🎵";
+  } else {
+    stopMusic();
+    musicBtn.classList.remove("playing");
+    musicBtn.querySelector(".note").textContent = "🔇";
+  }
+});
+</script>
+</body>
+</html>
