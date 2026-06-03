@@ -186,30 +186,28 @@ function render(){
     return;
   }
   const z=zodiacOf(profile.year), f=FS[z];
-  const locked = (PAGE==="teaser");
+  // 風水：輸入完直接出完整答案（四方位全顯示，不鎖），加 LINE 是答案下方的軟性邀請
   a.innerHTML=`
     <div class="res-head">
       <div class="z">${z}</div>
       <h2>屬${z} · 2026 居家風水</h2>
       <div class="sub">${f.head}</div>
     </div>
-    <div class="dirs ${locked?"locked":""}">
+    <div class="dirs">
       <div class="dir e"><span class="dlabel">東方</span><div class="dtext">${f.e}</div></div>
       <div class="dir w"><span class="dlabel">西方</span><div class="dtext">${f.w}</div></div>
       <div class="dir s"><span class="dlabel">南方</span><div class="dtext">${f.s}</div></div>
       <div class="dir n"><span class="dlabel">北方</span><div class="dtext">${f.n}</div></div>
     </div>
-    ${locked?`
-      <div class="lock-cta">
-        <div style="background:#eefaf0; border-left:3px solid #06c755; padding:14px 16px; border-radius:0 12px 12px 0; text-align:center; margin-bottom:14px;">
-          想看完整四方位擺設嗎？請輸入<br><span style="font-size:28px; color:#d32f2f; font-weight:900; letter-spacing:2px;">風水指南</span>
-        </div>
-        <button class="lc-btn" onclick="goToLine()">加 LINE · 解鎖完整擺設 →</button>
-        <div class="lc-foot">加入鷹桃貼身小秘書，輸入「風水指南」即可看完整 🔓</div>
-      </div>`:``}
     <div class="keybox">
       <div class="kt">💡 2026 重點提醒</div>
       <div class="kc">${f.key}</div>
+    </div>
+    <div class="lock-cta" style="margin-top:18px;">
+      <div style="background:#eefaf0; border-left:3px solid #06c755; padding:14px 16px; border-radius:0 12px 12px 0; text-align:center; margin-bottom:14px;">
+        想要更完整的居家開運建議嗎？加 LINE 輸入<br><span style="font-size:28px; color:#d32f2f; font-weight:900; letter-spacing:2px;">風水指南</span>
+      </div>
+      <button class="lc-btn" onclick="goToLine()">加入 鷹桃貼身小秘書 →</button>
     </div>`;
 }
 
@@ -278,7 +276,7 @@ coverScreen.addEventListener("click",()=>{
   document.getElementById("content").style.display="block";
   coverScreen.classList.add("fade");
   setTimeout(()=>coverScreen.remove(),650);
-  if(PAGE==="teaser" && !isJoined() && !profile) setTimeout(openForm,700);
+  if(!profile) setTimeout(openForm,700);   // 還沒填過 → 進場就跳生日表單
 });
 </script>
 </body>
