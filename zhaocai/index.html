@@ -273,82 +273,6 @@
 
   footer { text-align: center; padding: 8px 20px 90px; color: var(--ink-soft); font-size: 13px; }
   footer .brand { color: var(--gold); font-weight: 700; }
-
-  /* ============================================================
-     現代潮流撞色 改版（粗黑框 + 硬陰影 + 鮮豔撞色 + 粗黑體）
-     ============================================================ */
-  :root{
-    --ink:#141414; --ink-soft:#5b5b5b; --paper:#FBF6EE; --card:#ffffff; --line:#141414;
-    --gold:#FF2D78; --gold-soft:#FFC93C;
-    --c-orange:#FF5C2B; --c-pink:#FF2D78; --c-purple:#6C3CE0; --c-yellow:#FFC93C; --c-teal:#13C2A6;
-  }
-  body{
-    background:
-      radial-gradient(circle at 92% -2%, rgba(108,60,224,.16), transparent 36%),
-      radial-gradient(circle at 4% 10%, rgba(255,92,43,.18), transparent 32%),
-      var(--paper);
-  }
-  /* 所有標題改粗黑無襯線 */
-  .serif{ font-family:"Noto Sans TC",sans-serif !important; font-weight:900 !important; letter-spacing:0 !important; }
-
-  .topbar{ padding-top:30px; }
-  .topbar .eyebrow{ color:var(--c-purple); font-weight:900; }
-  .topbar h1{ font-size:34px; }
-  .topbar h1 .accent{ color:#fff; background:var(--c-pink); padding:0 12px; border-radius:10px;
-    box-shadow:3px 3px 0 var(--ink); display:inline-block; transform:rotate(-2deg); }
-  .intro .divider{ background:var(--ink); height:4px; width:64px; }
-
-  /* 今日精選卡：亮黃底 + 粗黑框 + 硬陰影 */
-  .today-card{ background:var(--c-yellow); border:3px solid var(--ink); border-radius:20px; box-shadow:6px 6px 0 var(--ink); }
-  .today-card .tag{ background:var(--ink); color:#fff; border-radius:8px; letter-spacing:1px; }
-  .today-info h2{ font-weight:900; }
-  .today-info .date,.today-info .reason{ color:#3a3a3a; }
-
-  /* 本命色鉤子卡：電光紫底 + 黃字 */
-  .destiny-gate{ background:var(--c-purple); border:3px solid var(--ink); border-radius:20px; box-shadow:6px 6px 0 var(--ink); }
-  .destiny-gate::after{ display:none; }
-  .destiny-gate .dg-eyebrow{ color:var(--c-yellow); }
-  .destiny-gate .dg-btn{ background:var(--c-yellow); color:var(--ink); border:2.5px solid var(--ink); border-radius:12px; box-shadow:4px 4px 0 var(--ink); }
-  .destiny-gate .dg-btn:active{ transform:translate(4px,4px); box-shadow:0 0 0 var(--ink); }
-  .destiny-result{ background:#fff; border:3px solid var(--ink); border-radius:20px; box-shadow:6px 6px 0 var(--ink); }
-  .destiny-result .dr-eyebrow{ color:var(--c-purple); }
-  .destiny-result h4{ font-weight:900; }
-
-  /* 月曆格：粗黑框 + 硬陰影；今日格青色撞色 */
-  .section-title{ font-weight:900; }
-  .day{ border:2.5px solid var(--ink); border-radius:14px; box-shadow:3px 3px 0 var(--ink); }
-  .day:active{ transform:translate(3px,3px); box-shadow:0 0 0 var(--ink); }
-  .day.is-today{ background:var(--c-teal); }
-  .day .star{ color:var(--ink); background:var(--c-yellow); padding:1px 6px; border-radius:6px; border:1.5px solid var(--ink); top:6px; right:6px; }
-  .day .cname{ font-weight:900; }
-
-  /* 彈窗 */
-  .modal{ border:3px solid var(--ink); border-radius:24px 24px 0 0; box-shadow:0 -6px 0 var(--ink); }
-  .modal-head h3{ font-weight:900; }
-  .modal-head .close{ background:var(--c-pink); color:#fff; border:2px solid var(--ink); box-shadow:2px 2px 0 var(--ink); }
-  .modal-head .match{ color:#3a3a3a; }
-  .field .label{ color:var(--c-purple); }
-  .field.reason .val{ border-left:4px solid var(--c-pink); background:#fff6fa; }
-
-  /* 表單 */
-  .bday-row select,.email-row input{ border:2px solid var(--ink); border-radius:10px; background:#fff; }
-  .gender-row .g{ border:2px solid var(--ink); border-radius:10px; background:#fff; }
-  .gender-row .g.sel{ background:var(--c-yellow); border-color:var(--ink); color:var(--ink); font-weight:900; box-shadow:2px 2px 0 var(--ink); }
-  .submit-btn{ background:var(--c-pink); color:#fff; border:2.5px solid var(--ink); border-radius:12px; box-shadow:4px 4px 0 var(--ink); }
-  .submit-btn:active{ transform:translate(4px,4px); box-shadow:0 0 0 var(--ink); }
-  .submit-btn:disabled{ opacity:.4; }
-
-  /* 揭曉 */
-  .reveal h3{ font-weight:900; }
-  .reveal .r-eyebrow{ color:var(--c-purple); }
-  .reveal .r-desc{ border-left:4px solid var(--c-pink); background:#fff6fa; }
-  .reveal .r-noble{ border:2px solid var(--ink); border-radius:14px; background:#f4f1ff; }
-
-  /* 音樂鈕 / 封面提示 / footer */
-  .music-btn{ border:2.5px solid var(--ink); box-shadow:3px 3px 0 var(--ink); background:var(--c-yellow); }
-  .music-btn:active{ transform:translate(3px,3px); box-shadow:0 0 0 var(--ink); }
-  .enter-hint .pill{ background:var(--c-pink); border:2px solid #fff; }
-  footer .brand{ color:var(--c-pink); }
 </style>
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 </head>
@@ -463,9 +387,11 @@ function destinyByBirthday(year){
   return { zodiac: z, element: el, ...f };
 }
 
-/* 圓點：扁平 + 粗黑邊 + 硬陰影（潮流撞色風） */
+/* 淺色圓點補細邊框，避免在白底上看不見 */
 function swatchStyle(hex){
-  return `background:${hex};border:2.5px solid #141414;box-shadow:3px 3px 0 #141414;`;
+  const light = ["#FFFFFF","#FBF4E4","#E8EBED","#F5E050","#D9C9A8","#E6D5B8","#87CEEB","#C7CCD1","#D4AF7A","#C3B091","#FF9E80","#E8A0B0"].includes(hex.toUpperCase());
+  const ring = light ? "0 0 0 1px #e2d9c4 inset," : "";
+  return `background:${hex};box-shadow:${ring}inset 0 0 0 3px rgba(255,255,255,.6),0 6px 14px -6px rgba(0,0,0,.28);`;
 }
 
 /* ====== 狀態：是否已填生日解鎖 ====== */
@@ -474,14 +400,30 @@ function loadProfile(){ try { return JSON.parse(localStorage.getItem(STORE_KEY) 
 function saveProfile(p){ localStorage.setItem(STORE_KEY, JSON.stringify(p)); }
 let profile = loadProfile();   // { year, month, day, gender }
 
-/* 今天是幾月幾號；未解鎖最多看到隔天，解鎖後整月全開 */
+/* 今天是幾月幾號 */
 const now = new Date();
 const monthIdx = now.getMonth();           // 0-11
 const MONTH_CN = ["一","二","三","四","五","六","七","八","九","十","十一","十二"];
 const monthName = MONTH_CN[monthIdx] + "月";
 let todayN = now.getDate();
 if (todayN > 30) todayN = 30;
-function maxView(){ return profile ? 30 : Math.min(todayN + 1, 30); }
+
+/* 解鎖到第幾週：連結帶 ?w=N 就解到第 N 週（LINE 小秘書每週給新連結），預設第 1 週 */
+function weeksUnlocked(){
+  const w = parseInt(new URLSearchParams(location.search).get("w") || "", 10);
+  return (w && w > 0) ? w : 1;
+}
+/* 沒填生日：只試看到隔天；填了生日：解鎖到第 N 週（= 前 7×N 天） */
+function maxView(){
+  if (!profile) return Math.min(todayN + 1, 30);
+  return Math.min(7 * weeksUnlocked(), 30);
+}
+/* 回 LINE 跟鷹桃小秘書領下一週 */
+function goToLine(){
+  const url = "https://lin.ee/9tMhphD";
+  try { if (window.liff && liff.openWindow) { liff.openWindow({ url: url, external: false }); return; } } catch(e){}
+  location.href = url;
+}
 
 document.getElementById("monthLabel").textContent = monthName;
 document.getElementById("eyebrowLabel").textContent = monthName.toUpperCase ? "招財穿搭" : "招財穿搭";
@@ -518,7 +460,7 @@ function renderDestiny(){
         <h3>你的「本命招財色」是哪一色？</h3>
         <p>每個人天生就有一個專屬招財色<br>輸入生日，30 秒測出你的本命色</p>
         <button class="dg-btn" id="gateBtn">免費測我的本命招財色 →</button>
-        <div class="dg-foot">測完同時解鎖整月每日穿搭 🔓</div>
+        <div class="dg-foot">測完解鎖這週每日招財穿搭 🔓</div>
       </div>`;
     document.getElementById("gateBtn").addEventListener("click", openFormModal);
   }
@@ -539,8 +481,9 @@ function renderGrid(){
         <div class="wk">${item.wk}</div>
         <div class="swatch" style="${swatchStyle(item.hex)}"></div>
         <div class="cname">？？？</div>
-        <div class="lock"><span class="ico">🔒</span><span>填生日解鎖</span></div>`;
-      el.addEventListener("click", openFormModal);   // 點鎖住的日子 → 引導填生日
+        <div class="lock"><span class="ico">🔒</span><span>${profile ? "回 LINE 領下一週" : "填生日解鎖"}</span></div>`;
+      // 沒填生日 → 引導填生日；已填 → 引導回 LINE 跟小秘書領下一週
+      el.addEventListener("click", profile ? goToLine : openFormModal);
     } else {
       el.innerHTML = `
         ${item.d === todayN ? '<span class="star">★ 今日</span>' : ''}
@@ -553,8 +496,8 @@ function renderGrid(){
     grid.appendChild(el);
   });
   document.getElementById("sectionHint").textContent = profile
-    ? "已解鎖整月 · 每天回來看今日招財色 ✨"
-    : `目前開放到 ${monthIdx+1}/${mv} · 填生日解鎖整月`;
+    ? `已解鎖第 ${weeksUnlocked()} 週 · 想看下一週？回 LINE 跟鷹桃小秘書領 👉`
+    : `目前試看到 ${monthIdx+1}/${mv} · 填生日解鎖第一週`;
 }
 
 /* ====== 彈窗：穿搭詳情 ====== */
@@ -715,7 +658,9 @@ function openRevealModal(d, justUnlocked){
         <div class="nb-swatch" style="${swatchStyle(d.nobleHex)}"></div>
         <div class="nb-text">遇到重要場合，加一點 <b>${d.noble}</b> 當貴人色，幫你帶來貴人運與助力。</div>
       </div>
-      ${justUnlocked ? `<button class="submit-btn" onclick="closeModal()">太準了！開始看每日穿搭 🔓</button>` : ``}
+      ${justUnlocked ? `
+        <div class="r-desc" style="border-left-color:#9c7; background:#f3f9ee;">🔓 已解鎖<b>這週</b>的招財穿搭！<br>下週的穿搭，回 LINE 跟「鷹桃貼身小秘書」說一聲，就會把下一週送給你 👉 每週都有新的。</div>
+        <button class="submit-btn" onclick="closeModal()">太準了！先看這週穿搭 ✨</button>` : ``}
     </div>`;
   openModal();
 }
