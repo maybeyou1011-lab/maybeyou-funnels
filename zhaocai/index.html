@@ -272,6 +272,23 @@
 
   footer { text-align: center; padding: 8px 20px 90px; color: var(--ink-soft); font-size: 13px; }
   footer .brand { color: var(--gold); font-weight: 700; }
+
+  /* 頁尾行動按鈕（加 LINE / 分享） */
+  .foot-actions { max-width: 420px; margin: 28px auto 0; padding: 0 18px; display: flex; flex-direction: column; gap: 12px; }
+  .foot-btn { display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 15px 18px; border: none; border-radius: 16px; cursor: pointer;
+    font-size: 16px; font-weight: 700; letter-spacing: 1px; transition: transform .15s, box-shadow .15s; }
+  .foot-btn:active { transform: scale(.98); }
+  .foot-btn.line { background: #06c755; color: #fff; box-shadow: 0 10px 24px -8px rgba(6,199,85,.6); }
+  .foot-row { display: flex; gap: 12px; }
+  .foot-row .foot-btn { flex: 1; }
+  .foot-btn.share { background: linear-gradient(135deg,#b88a3e,#966e1e); color: #fff; box-shadow: 0 10px 24px -10px rgba(120,90,30,.6); }
+  .foot-btn.share.ghost { background: #fff; color: var(--gold); border: 2px solid var(--gold-soft); box-shadow: none; }
+  /* 複製成功小提示 */
+  .toast { position: fixed; left: 50%; bottom: calc(90px + env(safe-area-inset-bottom)); transform: translateX(-50%) translateY(20px);
+    background: rgba(40,30,18,.94); color: #fff; padding: 12px 20px; border-radius: 999px; font-size: 14px;
+    z-index: 60; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; max-width: 86vw; text-align: center; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 </head>
@@ -314,9 +331,20 @@
   <div class="section-hint" id="sectionHint"></div>
   <div class="grid" id="grid"></div>
 
+  <!-- 頁尾行動按鈕：加官方 LINE + 分享 -->
+  <div class="foot-actions">
+    <button class="foot-btn line" onclick="goToLine()">＋ 加入官方 LINE　領每天幸運色</button>
+    <div class="foot-row">
+      <button class="foot-btn share ghost" onclick="shareLink()">🔗 分享連結</button>
+      <button class="foot-btn share" onclick="shareResult()">✨ 分享我的幸運色</button>
+    </div>
+  </div>
+
   <footer>
     色彩幸運曆 · by <span class="brand">美你的事</span><br>顏色帶來氣場，行動帶來收入 💛
   </footer>
+
+  <div class="toast" id="toast"></div>
 </div>
 
 <!-- 背景音樂按鈕 -->
@@ -436,6 +464,41 @@ function goToLine(){
   const url = "https://lin.ee/9tMhphD";
   try { if (window.liff && liff.openWindow) { liff.openWindow({ url: url, external: false }); return; } } catch(e){}
   location.href = url;
+}
+
+/* ===== 分享：分享連結 / 分享我的幸運色 ===== */
+const SHARE_URL = "https://maybeyou1011-lab.github.io/maybeyou-funnels/zhaocai/";  // 一律分享公開版
+
+function toast(msg){
+  const t = document.getElementById("toast");
+  if (!t) return;
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=> t.classList.remove("show"), 2600);
+}
+
+/* 真正執行分享：手機優先叫系統分享面板，不支援就複製到剪貼簿 */
+async function doShare(text, url){
+  if (navigator.share){
+    try { await navigator.share({ title: "色彩幸運曆", text: text, url: url }); return; }
+    catch(e){ if (e && e.name === "AbortError") return; }   // 使用者自己取消就不再彈
+  }
+  const full = text + "\n" + url;
+  try { await navigator.clipboard.writeText(full); toast("已複製分享文字，貼到 LINE / IG 就能分享 ✨"); }
+  catch(e){ window.prompt("複製這段分享給朋友：", full); }
+}
+
+/* 分享連結：純推廣，邀朋友來測 */
+function shareLink(){
+  doShare("🎨 色彩幸運曆｜每天一個幸運色，穿對顏色帶來好運氣！快來測你的本命幸運色 👉", SHARE_URL);
+}
+
+/* 分享我的幸運色：帶上本人結果（沒填過生日就退回分享連結） */
+function shareResult(){
+  if (!profile){ shareLink(); return; }
+  const d = destinyByBirthday(profile.year);
+  const text = `✨ 我的本命幸運色是「${d.color}」！\n生肖屬${d.zodiac}・五行屬${d.element}。\n你的幸運色是什麼？快來測 👉`;
+  doShare(text, SHARE_URL);
 }
 
 document.getElementById("monthLabel").textContent = monthName;
