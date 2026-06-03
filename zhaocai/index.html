@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>招財穿搭｜每天穿對顏色，財氣自然來</title>
+<title>幸運體質｜每天穿對顏色，養出好運</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
@@ -99,7 +99,7 @@
     display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
 
-  /* ---- 本命招財色 鉤子卡（拿生日）---- */
+  /* ---- 本命幸運色 鉤子卡（拿生日）---- */
   .destiny-wrap { padding: 22px 18px 4px; }
   .destiny-gate {
     position: relative; overflow: hidden;
@@ -279,20 +279,20 @@
 <body>
 <!-- 封面進入畫面 -->
 <div class="cover-screen" id="coverScreen">
-  <img src="cover.png" alt="招財穿搭學 · 原來氣場真的藏在顏色裡">
+  <img src="cover.png" alt="幸運體質 · 原來好運真的藏在顏色裡">
   <div class="enter-hint"><span class="pill">輕觸進入 ✨</span></div>
 </div>
 
 <div class="wrap" id="content">
 
   <div class="topbar">
-    <div class="eyebrow" id="eyebrowLabel">JUNE · 招財穿搭</div>
-    <h1 class="serif"><span id="monthLabel">六月</span><span class="accent">招財</span>穿搭</h1>
+    <div class="eyebrow" id="eyebrowLabel">JUNE · 幸運體質</div>
+    <h1 class="serif"><span id="monthLabel">六月</span><span class="accent">幸運</span>穿搭</h1>
   </div>
 
   <div class="intro">
     <div class="divider"></div>
-    <p>每天穿對顏色，把財氣穿在身上 ✨<br>點下方任一天，看完整招財穿搭</p>
+    <p>每天穿對顏色，把好運穿在身上 ✨<br>點下方任一天，看完整幸運穿搭</p>
   </div>
 
   <!-- 今日精選 -->
@@ -308,15 +308,15 @@
     </div>
   </div>
 
-  <!-- 本命招財色（拿生日的鉤子 / 解鎖後變成本命色小卡）-->
+  <!-- 本命幸運色（拿生日的鉤子 / 解鎖後變成本命色小卡）-->
   <div class="destiny-wrap" id="destinyWrap"></div>
 
-  <div class="section-title serif">— 本月招財穿搭 —</div>
+  <div class="section-title serif">— 本月幸運穿搭 —</div>
   <div class="section-hint" id="sectionHint"></div>
   <div class="grid" id="grid"></div>
 
   <footer>
-    色彩招財曆 · by <span class="brand">美你的事</span><br>顏色帶來氣場，行動帶來收入 💛
+    色彩幸運曆 · by <span class="brand">美你的事</span><br>顏色帶來氣場，行動帶來收入 💛
   </footer>
 </div>
 
@@ -329,56 +329,56 @@
 </div>
 
 <script>
-/* ====== 資料：本月 30 天招財穿搭 ====== */
+/* ====== 資料：本月 30 天幸運穿搭 ====== */
 const DATA = [
-  {d:1, wk:"週一", color:"奶油白", hex:"#FBF4E4", match:"淺金、米杏色", outfit:"白色襯衫、米色寬褲、奶油色洋裝", item:"金色細項鍊、米色托特包、珍珠耳環", reason:"月初適合先把氣場整理乾淨。白色代表清爽、重啟、歸零，適合開啟新的金錢流動。搭配金色小物，可以讓整體看起來更有「穩定收入感」。"},
-  {d:2, wk:"週二", color:"橘棕色", hex:"#B5651D", match:"奶茶色、咖啡色", outfit:"橘棕上衣、咖啡色長裙、奶茶色罩衫", item:"棕色皮帶、咖啡色包包、木質手環", reason:"橘棕色有行動力，也有親和力。今天適合談合作、開會、發訊息邀約。它不是衝動的紅，而是有溫度的推進，適合讓人願意靠近你。"},
-  {d:3, wk:"週三", color:"深藍色", hex:"#1F3A5F", match:"白色、銀色", outfit:"深藍襯衫、西裝褲、藍白條紋上衣", item:"銀色手錶、深藍髮夾、白色包款", reason:"深藍色代表專業、冷靜、判斷力。今天適合處理報價、合約、客戶溝通，不要太花俏，越乾淨越容易給人信任感。"},
-  {d:4, wk:"週四", color:"豆沙粉", hex:"#C98B8B", match:"玫瑰金、米白色", outfit:"豆沙粉上衣、米白裙、粉色針織外套", item:"玫瑰金耳環、粉色髮圈、小巧手拿包", reason:"今天的財不是硬搶來的，而是靠人緣帶來的。豆沙粉比亮粉色成熟，不會幼稚，適合用溫柔感增加好感度，特別適合服務業、美業、銷售溝通。"},
-  {d:5, wk:"週五", color:"墨綠色", hex:"#2E4A3C", match:"金色、米色", outfit:"墨綠洋裝、綠色襯衫、米色寬褲", item:"金色戒指、綠色絲巾、米色包", reason:"墨綠色有「穩定累積」的感覺。今天適合整理財務、規劃預算、談長期合作。它不是暴富色，而是能讓人覺得你可靠、有底氣。"},
-  {d:6, wk:"週六", color:"蜜桃橘", hex:"#FF9E80", match:"白色、淺咖色", outfit:"蜜桃橘上衣、白色牛仔褲、淺咖色短外套", item:"橘色手機殼、白色小包、咖色涼鞋", reason:"週末適合增加曝光與社交能量。蜜桃橘有活潑感，容易讓人注意到你，但不會太強勢。適合拍照、直播、聚會、發限動。"},
-  {d:7, wk:"週日", color:"燕麥色", hex:"#D9C9A8", match:"奶茶色、淺金色", outfit:"燕麥色套裝、奶茶色洋裝、針織背心", item:"金色細手鍊、奶茶色包包、裸色鞋", reason:"今天適合讓自己慢下來。燕麥色給人柔和、穩定、好相處的感覺。它的招財不是靠衝，而是讓你恢復狀態，隔天才有力氣繼續賺錢。"},
-  {d:8, wk:"週一", color:"正紅色", hex:"#D32F2F", match:"黑色、金色", outfit:"紅色上衣、黑色長褲、紅色洋裝", item:"金色耳環、紅色口紅、黑金包款", reason:"今天適合強勢開局。紅色有吸睛、啟動、增加存在感的效果。但紅色不要全身亂穿，最好只讓一個地方成為重點，否則容易變成壓迫感。"},
-  {d:9, wk:"週二", color:"淺灰色", hex:"#C7CCD1", match:"白色、銀色", outfit:"灰色西裝外套、白色內搭、灰白套裝", item:"銀色手錶、灰色托特包、白色皮鞋", reason:"灰色代表理性與平衡。今天適合面對需要談判、比價、分析的事情。穿得太情緒化反而不利，乾淨的灰白配色會讓你看起來更清醒。"},
-  {d:10, wk:"週三", color:"香檳金", hex:"#D4AF7A", match:"奶油白、咖啡色", outfit:"香檳金飾品、米白洋裝、咖色裙裝", item:"金色髮夾、香檳色包包、細緻戒指", reason:"香檳金比亮金色更高級，適合提升貴人運與質感。今天適合見重要客戶、談價格、做品牌曝光。重點是「貴氣」，不是浮誇。"},
-  {d:11, wk:"週四", color:"天空藍", hex:"#87CEEB", match:"白色、淺灰色", outfit:"天空藍襯衫、白褲、藍白洋裝", item:"藍色絲巾、白色小包、銀色耳環", reason:"天空藍有溝通順暢的意味。今天適合寫文案、談課程、拍影片、錄音、開會。它讓人感覺清爽，適合把複雜的事情說得簡單。"},
-  {d:12, wk:"週五", color:"巧克力棕", hex:"#5A3A22", match:"米白色、金色", outfit:"棕色襯衫、米色長裙、咖啡色西裝褲", item:"棕色皮包、金色耳扣、皮革錶帶", reason:"巧克力棕有成熟、穩重、可靠的感覺。今天適合談長線合作、續約、老客戶回購。不要穿得太可愛，今天越穩，越容易讓人願意買單。"},
-  {d:13, wk:"週六", color:"粉紫色", hex:"#C9A9D4", match:"白色、銀色", outfit:"粉紫上衣、白裙、淡紫色洋裝", item:"紫色髮飾、銀色項鍊、白色包款", reason:"粉紫色有柔和的吸引力，適合做個人魅力與內容曝光。今天不適合太硬推銷，適合用故事、感受、生活感讓人靠近你。"},
-  {d:14, wk:"週日", color:"森林綠", hex:"#2F5233", match:"奶茶色、白色", outfit:"森林綠襯衫、白色寬褲、綠色背心", item:"綠色帆布包、木質飾品、奶茶色帽子", reason:"森林綠代表修復與生長。今天適合沉澱、整理內容、規劃下週。招財不一定是今天成交，而是把你的根打穩，讓後面的財更容易長出來。"},
-  {d:15, wk:"週一", color:"黑色", hex:"#1A1A1A", match:"金色、白色", outfit:"黑色西裝、黑色洋裝、白襯衫搭黑褲", item:"金色耳環、黑色皮包、白色手錶", reason:"黑色代表權威與界線。今天適合談條件、設定規則、拒絕不合理要求。招財不是只會吸引錢，有時候是先停止被消耗。"},
-  {d:16, wk:"週二", color:"檸檬黃", hex:"#F5E050", match:"白色、淺灰色", outfit:"黃色上衣、白褲、黃色針織外套", item:"黃色髮夾、白色包、銀色戒指", reason:"檸檬黃有開朗、提亮、增加注意力的效果。今天適合做曝光、發新品、拍短影片。它會讓人覺得你有活力，但要避免大面積太刺眼。"},
-  {d:17, wk:"週三", color:"酒紅色", hex:"#6E1423", match:"黑色、深咖色", outfit:"酒紅襯衫、黑裙、酒紅針織衫", item:"酒紅包、深色皮鞋、金色耳飾", reason:"酒紅色有成熟魅力，也有深度感。今天適合談高單價商品、課程、顧問服務。它給人的感覺不是便宜熱鬧，而是值得被認真看待。"},
-  {d:18, wk:"週四", color:"米杏色", hex:"#E6D5B8", match:"淡咖色、珍珠白", outfit:"米杏色洋裝、淡咖色長褲、白色襯衫", item:"珍珠耳環、米色包包、裸色高跟鞋", reason:"米杏色有親和、耐看、舒服的氣場。今天適合服務顧客、做回訪、經營關係。真正長久的財，很多時候不是一次成交，而是人願意一直相信你。"},
-  {d:19, wk:"週五", color:"銀白色", hex:"#E8EBED", match:"淺藍色、灰色", outfit:"白色套裝、銀灰上衣、淺藍襯衫", item:"銀色包、銀色耳環、金屬髮夾", reason:"銀白色適合清理混亂與提升判斷力。今天適合整理帳目、檢查訂單、處理系統資料。這天的招財關鍵不是多賣，而是少出錯。"},
-  {d:20, wk:"週六", color:"珊瑚橘", hex:"#FF7F5C", match:"白色、淺棕色", outfit:"珊瑚橘洋裝、白色短褲、橘色襯衫", item:"橘色小包、棕色涼鞋、金色手鍊", reason:"珊瑚橘有社交溫度，很適合週末聚會、直播、活動。今天適合讓人看到你生活中的亮點，財運來自「有人想靠近你」。"},
-  {d:21, wk:"週日", color:"薰衣草紫", hex:"#B59FD0", match:"白色、淺灰色", outfit:"紫色上衣、白裙、灰紫色洋裝", item:"紫色髮帶、銀色戒指、小香風包", reason:"薰衣草紫有安定情緒與提升氣質的感覺。今天適合休息、充電、寫內在型內容。不是每天都要拼，會休息的人，才不會把賺錢變成耗損。"},
-  {d:22, wk:"週一", color:"軍綠色", hex:"#4B5320", match:"黑色、卡其色", outfit:"軍綠襯衫、卡其褲、黑色背心", item:"黑色腰包、皮革手環、卡其帽", reason:"軍綠色有執行力與穩定感。今天適合跑業務、執行計畫、做陌生開發。這不是柔弱的顏色，是提醒你：不要只想，要動。"},
-  {d:23, wk:"週二", color:"玫瑰粉", hex:"#E8A0B0", match:"米白色、玫瑰金", outfit:"玫瑰粉上衣、米白寬褲、粉色洋裝", item:"玫瑰金項鍊、粉色手帳、米色包", reason:"玫瑰粉適合提升人緣與好感。今天適合做私訊邀約、客戶關心、社群互動。它的招財邏輯是：先讓人願意回你，後面才有成交。"},
-  {d:24, wk:"週三", color:"海軍藍", hex:"#1C2E4A", match:"白色、金色", outfit:"海軍藍西裝、白襯衫、藍色長裙", item:"金色胸針、白色包、藍色絲巾", reason:"海軍藍比普通藍更有權威感。今天適合做正式發表、提案、課程說明、報價。它會讓你看起來不是在求別人買，而是在提供值得信任的選擇。"},
-  {d:25, wk:"週四", color:"焦糖色", hex:"#B8742A", match:"米色、咖啡色", outfit:"焦糖色上衣、米色長裙、咖啡色套裝", item:"焦糖色皮包、咖啡色皮鞋、金色戒指", reason:"焦糖色有溫暖、穩定、成熟的氛圍。今天適合經營老顧客、做回購活動、建立信任。這種顏色最適合賣「長期陪伴型」商品。"},
-  {d:26, wk:"週五", color:"亮白色", hex:"#FFFFFF", match:"金色、淺藍色", outfit:"白襯衫、白洋裝、白色套裝", item:"金色耳環、淺藍包、白色鞋", reason:"亮白色很適合在週五做收尾與整理。它讓人看起來乾淨、有精神，也適合面對新客戶。招財關鍵是讓人覺得你清楚、可信、不混亂。"},
-  {d:27, wk:"週六", color:"葡萄紫", hex:"#5B2C6F", match:"黑色、銀色", outfit:"紫色上衣、黑色長裙、紫黑洋裝", item:"銀色耳環、紫色包包、黑色髮夾", reason:"葡萄紫有神秘感與記憶點。今天適合出席活動、拍照、製造辨識度。你不需要討好所有人，但要讓對的人記得你。"},
-  {d:28, wk:"週日", color:"淺卡其", hex:"#C3B091", match:"白色、奶茶色", outfit:"卡其襯衫、白色長褲、奶茶色洋裝", item:"卡其帽、白色帆布包、木質耳環", reason:"淺卡其有自然、舒服、不費力的感覺。今天適合生活感內容、戶外拍照、慢節奏經營。不是所有財都來自強勢，有些財來自你真實、不裝。"},
-  {d:29, wk:"週一", color:"孔雀藍", hex:"#1A7B8C", match:"金色、米白色", outfit:"孔雀藍襯衫、米白裙、藍色洋裝", item:"金色耳飾、藍色包包、米色高跟鞋", reason:"孔雀藍有獨特感，適合在月底前創造亮點。今天適合做主題發文、開直播、發限動互動。它不是安全色，但有辨識度，適合讓人停下來看你。"},
-  {d:30, wk:"週二", color:"金棕色", hex:"#9A6B2F", match:"黑色、奶油白", outfit:"金棕上衣、黑色長褲、白色襯衫外搭棕色背心", item:"金色手鍊、棕色皮包、黑色皮鞋", reason:"月底適合收成、結算、穩住成果。金棕色有成熟財氣，不浮誇但很有存在感。今天適合做成交收尾、業績整理、月底感謝文。"}
+  {d:1, wk:"週一", color:"奶油白", hex:"#FBF4E4", match:"淺金、米杏色", outfit:"白色襯衫、米色寬褲、奶油色洋裝", item:"金色細項鍊、米色托特包、珍珠耳環", reason:"月初適合把氣場整理乾淨。白色代表清爽、重啟、歸零，斷捨離一下，把舊的氣清掉，好運才有位置進來。搭金色小物提升整體的明亮運。"},
+  {d:2, wk:"週二", color:"橘棕色", hex:"#B5651D", match:"奶茶色、咖啡色", outfit:"橘棕上衣、咖啡色長裙、奶茶色罩衫", item:"棕色皮帶、咖啡色包包、木質手環", reason:"橘棕色有行動力也有親和力。今天適合主動聯絡朋友、踏出舒適圈，有溫度的推進，讓人緣與好機會自然靠近你。"},
+  {d:3, wk:"週三", color:"深藍色", hex:"#1F3A5F", match:"白色、銀色", outfit:"深藍襯衫、西裝褲、藍白條紋上衣", item:"銀色手錶、深藍髮夾、白色包款", reason:"深藍色代表專業、冷靜、判斷力。今天適合做決定、處理需要理性的事，乾淨的藍讓你少出錯，也讓貴人更信任你。"},
+  {d:4, wk:"週四", color:"豆沙粉", hex:"#C98B8B", match:"玫瑰金、米白色", outfit:"豆沙粉上衣、米白裙、粉色針織外套", item:"玫瑰金耳環、粉色髮圈、小巧手拿包", reason:"好運常常是人緣帶來的。豆沙粉成熟不幼稚，今天用溫柔感增加好感度，桃花與貴人運都旺，很適合與人相處互動。"},
+  {d:5, wk:"週五", color:"墨綠色", hex:"#2E4A3C", match:"金色、米色", outfit:"墨綠洋裝、綠色襯衫、米色寬褲", item:"金色戒指、綠色絲巾、米色包", reason:"墨綠色有「穩定累積」的感覺。今天適合規劃、把長遠的事打好底，不急不躁，讓好運慢慢長出來、根基更穩。"},
+  {d:6, wk:"週六", color:"蜜桃橘", hex:"#FF9E80", match:"白色、淺咖色", outfit:"蜜桃橘上衣、白色牛仔褲、淺咖色短外套", item:"橘色手機殼、白色小包、咖色涼鞋", reason:"蜜桃橘有活潑的社交能量。週末很適合聚會、拍照、認識新朋友，人氣一旺，好事就容易發生。"},
+  {d:7, wk:"週日", color:"燕麥色", hex:"#D9C9A8", match:"奶茶色、淺金色", outfit:"燕麥色套裝、奶茶色洋裝、針織背心", item:"金色細手鍊、奶茶色包包、裸色鞋", reason:"今天適合讓自己慢下來。燕麥色柔和、好相處，把狀態養好、把氣補回來，好運才接得住。"},
+  {d:8, wk:"週一", color:"正紅色", hex:"#D32F2F", match:"黑色、金色", outfit:"紅色上衣、黑色長褲、紅色洋裝", item:"金色耳環、紅色口紅、黑金包款", reason:"正紅色提升存在感、開運氣。今天適合需要被看見、想全力以赴的場合，紅色只點綴一處最旺，氣場全開。"},
+  {d:9, wk:"週二", color:"淺灰色", hex:"#C7CCD1", match:"白色、銀色", outfit:"灰色西裝外套、白色內搭、灰白套裝", item:"銀色手錶、灰色托特包、白色皮鞋", reason:"灰色代表理性與平衡。今天適合面對需要冷靜的事，灰白配色讓你清醒、不被情緒帶走，選擇更準。"},
+  {d:10, wk:"週三", color:"香檳金", hex:"#D4AF7A", match:"奶油白、咖啡色", outfit:"香檳金飾品、米白洋裝、咖色裙裝", item:"金色髮夾、香檳色包包、細緻戒指", reason:"香檳金比亮金更高級，最旺貴人運。今天適合重要場合、想結交的人，貴氣不浮誇，貴人緣特別旺。"},
+  {d:11, wk:"週四", color:"天空藍", hex:"#87CEEB", match:"白色、淺灰色", outfit:"天空藍襯衫、白褲、藍白洋裝", item:"藍色絲巾、白色小包、銀色耳環", reason:"天空藍代表溝通順暢。今天適合表達、聊天、把話說清楚，清爽的氣場讓人覺得你好相處，溝通運佳。"},
+  {d:12, wk:"週五", color:"巧克力棕", hex:"#5A3A22", match:"米白色、金色", outfit:"棕色襯衫、米色長裙、咖啡色西裝褲", item:"棕色皮包、金色耳扣、皮革錶帶", reason:"巧克力棕成熟穩重可靠。今天適合需要被信任的場合、與長輩相處，越穩越得人緣與機會。"},
+  {d:13, wk:"週六", color:"粉紫色", hex:"#C9A9D4", match:"白色、銀色", outfit:"粉紫上衣、白裙、淡紫色洋裝", item:"紫色髮飾、銀色項鍊、白色包款", reason:"粉紫色有柔和的吸引力。今天適合展現魅力，用真誠與故事讓人靠近你，桃花與好感運上升。"},
+  {d:14, wk:"週日", color:"森林綠", hex:"#2F5233", match:"奶茶色、白色", outfit:"森林綠襯衫、白色寬褲、綠色背心", item:"綠色帆布包、木質飾品、奶茶色帽子", reason:"森林綠代表修復與生長。今天適合沉澱、休息、把自己照顧好，根穩了，後面的好運更容易長出來。"},
+  {d:15, wk:"週一", color:"黑色", hex:"#1A1A1A", match:"金色、白色", outfit:"黑色西裝、黑色洋裝、白襯衫搭黑褲", item:"金色耳環、黑色皮包、白色手錶", reason:"黑色代表權威與界線。今天適合設定原則、拒絕消耗你的人事，先把氣場守好，好運才不會外漏。"},
+  {d:16, wk:"週二", color:"檸檬黃", hex:"#F5E050", match:"白色、淺灰色", outfit:"黃色上衣、白褲、黃色針織外套", item:"黃色髮夾、白色包、銀色戒指", reason:"檸檬黃開朗、提亮、帶來好心情。今天適合需要活力的場合、開心做事，好運常跟著好心情一起來。"},
+  {d:17, wk:"週三", color:"酒紅色", hex:"#6E1423", match:"黑色、深咖色", outfit:"酒紅襯衫、黑裙、酒紅針織衫", item:"酒紅包、深色皮鞋、金色耳飾", reason:"酒紅色有成熟魅力與深度。今天適合正式或重要的場合，氣質沉穩耐看，讓對的人認真看待你。"},
+  {d:18, wk:"週四", color:"米杏色", hex:"#E6D5B8", match:"淡咖色、珍珠白", outfit:"米杏色洋裝、淡咖色長褲、白色襯衫", item:"珍珠耳環、米色包包、裸色高跟鞋", reason:"米杏色親和、耐看、舒服。今天適合經營關係、陪伴重要的人，溫和的氣場讓人願意一直靠近你。"},
+  {d:19, wk:"週五", color:"銀白色", hex:"#E8EBED", match:"淺藍色、灰色", outfit:"白色套裝、銀灰上衣、淺藍襯衫", item:"銀色包、銀色耳環、金屬髮夾", reason:"銀白色適合清理混亂、提升判斷。今天適合整理、把事情理順，重點不是多做，而是少出錯、心更清。"},
+  {d:20, wk:"週六", color:"珊瑚橘", hex:"#FF7F5C", match:"白色、淺棕色", outfit:"珊瑚橘洋裝、白色短褲、橘色襯衫", item:"橘色小包、棕色涼鞋、金色手鍊", reason:"珊瑚橘有社交溫度。週末很適合聚會、活動，今天讓人看到你的亮點，好運來自「有人想靠近你」。"},
+  {d:21, wk:"週日", color:"薰衣草紫", hex:"#B59FD0", match:"白色、淺灰色", outfit:"紫色上衣、白裙、灰紫色洋裝", item:"紫色髮帶、銀色戒指、小香風包", reason:"薰衣草紫安定情緒、提升氣質。今天適合休息、靜心、照顧內在，懂得放鬆的人，好運才不會被耗掉。"},
+  {d:22, wk:"週一", color:"軍綠色", hex:"#4B5320", match:"黑色、卡其色", outfit:"軍綠襯衫、卡其褲、黑色背心", item:"黑色腰包、皮革手環、卡其帽", reason:"軍綠色有執行力與穩定感。今天適合把想做的事真的去做、踏出第一步，行動本身就會帶來好運。"},
+  {d:23, wk:"週二", color:"玫瑰粉", hex:"#E8A0B0", match:"米白色、玫瑰金", outfit:"玫瑰粉上衣、米白寬褲、粉色洋裝", item:"玫瑰金項鍊、粉色手帳、米色包", reason:"玫瑰粉提升人緣與好感。今天適合關心朋友、互動交流，先讓人願意回應你，緣分與好事自然來。"},
+  {d:24, wk:"週三", color:"海軍藍", hex:"#1C2E4A", match:"白色、金色", outfit:"海軍藍西裝、白襯衫、藍色長裙", item:"金色胸針、白色包、藍色絲巾", reason:"海軍藍有權威與信任感。今天適合正式發表、表達立場，氣場沉穩，讓人覺得你可靠、值得信賴。"},
+  {d:25, wk:"週四", color:"焦糖色", hex:"#B8742A", match:"米色、咖啡色", outfit:"焦糖色上衣、米色長裙、咖啡色套裝", item:"焦糖色皮包、咖啡色皮鞋、金色戒指", reason:"焦糖色溫暖、穩定、成熟。今天適合維繫長久關係、陪伴老朋友，溫潤的氣場讓信任與好運慢慢累積。"},
+  {d:26, wk:"週五", color:"亮白色", hex:"#FFFFFF", match:"金色、淺藍色", outfit:"白襯衫、白洋裝、白色套裝", item:"金色耳環、淺藍包、白色鞋", reason:"亮白色適合在週五做收尾與整理。讓自己乾淨有精神，適合面對新的人事，清爽的氣場帶來清晰的好運。"},
+  {d:27, wk:"週六", color:"葡萄紫", hex:"#5B2C6F", match:"黑色、銀色", outfit:"紫色上衣、黑色長裙、紫黑洋裝", item:"銀色耳環、紫色包包、黑色髮夾", reason:"葡萄紫有神秘感與記憶點。今天適合出席活動、製造辨識度，不必討好所有人，讓對的人記得你。"},
+  {d:28, wk:"週日", color:"淺卡其", hex:"#C3B091", match:"白色、奶茶色", outfit:"卡其襯衫、白色長褲、奶茶色洋裝", item:"卡其帽、白色帆布包、木質耳環", reason:"淺卡其自然、舒服、不費力。今天適合生活感、戶外、慢步調，做真實的自己，好運來自不裝、自在。"},
+  {d:29, wk:"週一", color:"孔雀藍", hex:"#1A7B8C", match:"金色、米白色", outfit:"孔雀藍襯衫、米白裙、藍色洋裝", item:"金色耳飾、藍色包包、米色高跟鞋", reason:"孔雀藍獨特、有辨識度。月底前適合創造亮點、做想做的事，讓人停下來注意你，好機會也跟著上門。"},
+  {d:30, wk:"週二", color:"金棕色", hex:"#9A6B2F", match:"黑色、奶油白", outfit:"金棕上衣、黑色長褲、白色襯衫外搭棕色背心", item:"金色手鍊、棕色皮包、黑色皮鞋", reason:"月底適合回顧、感謝、把好的留下。成熟的金棕氣場穩穩落定，讓這個月累積的福氣收進口袋。"}
 ];
 
-/* ====== 本命招財色引擎（生肖 → 五行 → 招財色）======
-   白話：用出生年算生肖，生肖對應五行，五行給一個本命招財主色，
+/* ====== 本命幸運色引擎（生肖 → 五行 → 幸運色）======
+   白話：用出生年算生肖，生肖對應五行，五行給一個本命幸運主色，
    再用「生我者為貴人」給一個貴人色。先放在前端，之後會搬到後台的 lib 共用。 */
 const ZODIAC = ["鼠","牛","虎","兔","龍","蛇","馬","羊","猴","雞","狗","豬"];
 const ZODIAC_ELEMENT = {鼠:"水",牛:"土",虎:"木",兔:"木",龍:"土",蛇:"火",馬:"火",羊:"土",猴:"金",雞:"金",狗:"土",豬:"水"};
 const ELEMENT_FORTUNE = {
   木: { color:"森林綠", hex:"#2F5233", noble:"海軍藍", nobleHex:"#1C2E4A",
-        desc:"你的本命屬木，財氣來自「開創與成長」。穿對綠色系，你做企劃、開發新客、推新案時會更有底氣，讓人感覺你正在往上長。" },
+        desc:"你的本命屬木，好運來自「開創與成長」。穿對綠色系，做新計畫、嘗試新事物、往前衝時會更有底氣，運勢也跟著往上長。" },
   火: { color:"正紅色", hex:"#D32F2F", noble:"森林綠", nobleHex:"#2F5233",
-        desc:"你的本命屬火，財氣來自「熱度與曝光」。紅色系幫你在鏡頭前、舞台上、銷售現場更亮眼，讓人記得住你、願意買單。" },
+        desc:"你的本命屬火，好運來自「熱情與曝光」。紅色系幫你在人群中、重要場合更亮眼，讓人記得你、好機會主動找上門。" },
   土: { color:"焦糖色", hex:"#B8742A", noble:"正紅色", nobleHex:"#D32F2F",
-        desc:"你的本命屬土，財氣來自「信任與累積」。大地色系讓你顯得穩重可靠，特別適合經營老顧客、做長期回購、談續約。" },
+        desc:"你的本命屬土，好運來自「信任與累積」。大地色系讓你穩重可靠，特別旺人際與長久關係，貴人緣慢慢累積。" },
   金: { color:"香檳金", hex:"#D4AF7A", noble:"焦糖色", nobleHex:"#B8742A",
-        desc:"你的本命屬金，財氣來自「質感與貴人」。金色系提升你的貴氣與說服力，談價格、見重要客戶、做品牌時最吃香。" },
+        desc:"你的本命屬金，好運來自「質感與貴人」。金色系提升你的貴氣與魅力，重要場合、想結交的人，貴人運最旺。" },
   水: { color:"海軍藍", hex:"#1C2E4A", noble:"香檳金", nobleHex:"#D4AF7A",
-        desc:"你的本命屬水，財氣來自「靈活與溝通」。藍色系讓你思路清晰、表達順暢，談合作、寫文案、做提案特別有說服力。" },
+        desc:"你的本命屬水，好運來自「靈活與溝通」。藍色系讓你思路清晰、表達順暢，人際與機緣都跟著順起來。" },
 };
 function destinyByBirthday(year){
   const z = ZODIAC[((year - 4) % 12 + 12) % 12];
@@ -424,7 +424,7 @@ function maxView(){
   return todayN;                                                                    // 冷流量 → 只到今天
 }
 /* 記/判斷這台裝置是否已加過 LINE。key 用全站共用的(不帶主題)，
-   所以在任何一個模板頁(招財穿搭/風水…)加過，其他頁都不再跳加入彈窗。 */
+   所以在任何一個模板頁(幸運穿搭/風水…)加過，其他頁都不再跳加入彈窗。 */
 function markJoined(){ try { localStorage.setItem("maybeyou_line_joined", "1"); } catch(e){} }
 function isJoined(){ try { return !!localStorage.getItem("maybeyou_line_joined"); } catch(e){ return false; } }
 /* 從 LINE 連結(?w=)進來 → 視為已加入 */
@@ -439,29 +439,28 @@ function goToLine(){
 }
 
 document.getElementById("monthLabel").textContent = monthName;
-document.getElementById("eyebrowLabel").textContent = monthName.toUpperCase ? "招財穿搭" : "招財穿搭";
-document.getElementById("eyebrowLabel").textContent = monthName + " · 招財穿搭";
+document.getElementById("eyebrowLabel").textContent = monthName + " · 幸運體質";
 
 /* ---- 今日精選 ---- */
 const t = DATA[todayN - 1];
 document.getElementById("todaySwatch").style.cssText = swatchStyle(t.hex);
 document.getElementById("todayTag").textContent = `${monthIdx+1}/${t.d} 今日推薦`;
 document.getElementById("todayDate").textContent = `${monthIdx+1}月${t.d}日 ${t.wk}`;
-document.getElementById("todayColor").innerHTML = `招財主色　<span style="color:var(--gold)">${t.color}</span>`;
+document.getElementById("todayColor").innerHTML = `幸運主色　<span style="color:var(--gold)">${t.color}</span>`;
 document.getElementById("todayReason").textContent = t.reason;
 document.getElementById("todayCard").addEventListener("click", () => openDayModal(todayN - 1));
 
-/* ---- 本命招財色區塊（依是否解鎖切換）---- */
+/* ---- 本命幸運色區塊（依是否解鎖切換）---- */
 function renderDestiny(){
   const box = document.getElementById("destinyWrap");
   if (profile) {
-    // 已填生日+Email → 顯示本命招財色結果
+    // 已填生日+Email → 顯示本命幸運色結果
     const d = destinyByBirthday(profile.year);
     box.innerHTML = `
       <div class="destiny-result" id="destinyResult">
         <div class="dr-swatch" style="${swatchStyle(d.hex)}"></div>
         <div>
-          <div class="dr-eyebrow">你的本命招財色 · ${d.zodiac}（${d.element}）</div>
+          <div class="dr-eyebrow">你的本命幸運色 · ${d.zodiac}（${d.element}）</div>
           <h4>${d.color}</h4>
           <div class="dr-sub">貴人色：${d.noble}　·　點看完整解讀</div>
         </div>
@@ -471,9 +470,9 @@ function renderDestiny(){
     // 已加 LINE、還沒填 → 引導填生日+Email 解鎖整週
     box.innerHTML = `
       <div class="destiny-gate">
-        <div class="dg-eyebrow">✦ 本命招財色 ✦</div>
-        <h3>想看完整一週招財穿搭？</h3>
-        <p>輸入生日 + Email，立刻測出你的本命招財色<br>並解鎖這一週每日穿搭</p>
+        <div class="dg-eyebrow">✦ 本命幸運色 ✦</div>
+        <h3>想看完整一週幸運穿搭？</h3>
+        <p>輸入生日 + Email，立刻測出你的本命幸運色<br>並解鎖這一週每日穿搭</p>
         <button class="dg-btn" id="gateBtn">填資料解鎖整週 →</button>
         <div class="dg-foot">免費，30 秒 🔓</div>
       </div>`;
@@ -482,10 +481,10 @@ function renderDestiny(){
     // 冷流量 → 先加 LINE
     box.innerHTML = `
       <div class="destiny-gate">
-        <div class="dg-eyebrow">✦ 命中註定的招財色 ✦</div>
-        <h3>解鎖你的專屬招財穿搭曆</h3>
-        <p>加入鷹桃貼身小秘書，免費測本命招財色<br>還能每天看今日穿搭、每週領完整一週</p>
-        <button class="dg-btn" id="gateBtn">加 LINE 解鎖完整招財曆 →</button>
+        <div class="dg-eyebrow">✦ 命中註定的幸運色 ✦</div>
+        <h3>解鎖你的專屬幸運穿搭曆</h3>
+        <p>加入鷹桃貼身小秘書，免費測本命幸運色<br>還能每天看今日穿搭、每週領完整一週</p>
+        <button class="dg-btn" id="gateBtn">加 LINE 解鎖完整幸運曆 →</button>
         <div class="dg-foot">點下去加入「鷹桃貼身小秘書」🔓</div>
       </div>`;
     document.getElementById("gateBtn").addEventListener("click", goToLine);
@@ -528,7 +527,7 @@ function renderGrid(){
   document.getElementById("sectionHint").textContent =
     profile        ? `已解鎖第 ${weeksUnlocked()} 週 · 想看下一週？回 LINE 跟鷹桃小秘書領 👉`
     : cameFromLine() ? `已開放 3 天嚐鮮 · 填生日+Email 解鎖完整一週 🔓`
-    :                  `加 LINE 解鎖完整招財曆 · 每天都有今日招財穿搭 👉`;
+    :                  `加 LINE 解鎖完整幸運曆 · 每天都有今日幸運穿搭 👉`;
 }
 
 /* ====== 彈窗：穿搭詳情 ====== */
@@ -542,13 +541,13 @@ function openDayModal(i){
       <button class="close" onclick="closeModal()">×</button>
       <div class="m-date">${monthIdx+1}月${x.d}日 · ${x.wk}</div>
       <div class="m-swatch" style="${swatchStyle(x.hex)}"></div>
-      <h3>招財主色｜${x.color}</h3>
+      <h3>幸運主色｜${x.color}</h3>
       <div class="match">搭配色：${x.match}</div>
     </div>
     <div class="modal-body">
       <div class="field"><div class="label">👗 穿搭建議</div><div class="val">${x.outfit}</div></div>
       <div class="field"><div class="label">💍 穿搭小物</div><div class="val">${x.item}</div></div>
-      <div class="field reason"><div class="label">💰 招財原因</div><div class="val">${x.reason}</div></div>
+      <div class="field reason"><div class="label">💰 開運原因</div><div class="val">${x.reason}</div></div>
     </div>`;
   openModal();
 }
@@ -557,8 +556,8 @@ function openDayModal(i){
    設定區（每開一個新主題頁，只要改這裡 + 上面的 DATA 內容）
    ====================================================================== */
 const CONFIG = {
-  TOPIC: "招財穿搭",          // 名單試算表會記這個主題，方便區分招財穿搭/風水…
-  // Google Apps Script 網址（送名單進「招財穿搭名單」試算表）
+  TOPIC: "幸運體質",          // 名單試算表會記這個主題，方便區分幸運體質/風水…
+  // Google Apps Script 網址（送名單進「幸運穿搭名單」試算表）
   SHEET_WEBHOOK: "https://script.google.com/macros/s/AKfycbzbEiUEiZ72jjOqwHH9Y-mpvIxb5M8iPJjC3E22XbGJ2DpQoiz_wxiVATWjszhzWz_b/exec",
   LIFF_ID: "2010278875-7X46fusb",   // LINE LIFF（在 LINE 裡開才會生效）
 };
@@ -605,10 +604,10 @@ function openFormModal(){
     <div class="modal-head">
       <div class="grab"></div>
       <button class="close" onclick="closeModal()">×</button>
-      <div class="m-date">✦ 本命招財色 ✦</div>
+      <div class="m-date">✦ 本命幸運色 ✦</div>
       <h3>輸入你的生日</h3>
     </div>
-    <div class="form-intro">輸入生日測出你的本命招財色，並解鎖這一週每日穿搭<br>Email 用來把每月招財曆寄給你</div>
+    <div class="form-intro">輸入生日測出你的本命幸運色，並解鎖這一週每日穿搭<br>Email 用來把每月幸運曆寄給你</div>
     <div class="form-body">
       <div class="bday-row">
         <select id="selYear"><option value="" disabled selected>出生年</option>${yearOpts}</select>
@@ -621,10 +620,10 @@ function openFormModal(){
         <div class="g" data-g="other">不透露</div>
       </div>
       <div class="email-row">
-        <input id="selEmail" type="email" inputmode="email" autocomplete="email" placeholder="你的 Email（寄專屬招財曆給你）" />
+        <input id="selEmail" type="email" inputmode="email" autocomplete="email" placeholder="你的 Email（寄專屬幸運曆給你）" />
       </div>
-      <button class="submit-btn" id="submitBtn" disabled>揭曉我的本命招財色 ✨</button>
-      <div class="form-note">只用來算你的招財色、寄招財曆給你，不會外流 🔒</div>
+      <button class="submit-btn" id="submitBtn" disabled>揭曉我的本命幸運色 ✨</button>
+      <div class="form-note">只用來算你的幸運色、寄幸運曆給你，不會外流 🔒</div>
     </div>`;
   const check = () => {
     formState.year = document.getElementById("selYear").value;
@@ -654,7 +653,7 @@ async function submitBirthday(){
   };
   saveProfile(profile);
   const d = destinyByBirthday(profile.year);
-  // 送一筆名單進 Google 試算表（含主題，方便招財穿搭/風水…分開看）
+  // 送一筆名單進 Google 試算表（含主題，方便幸運穿搭/風水…分開看）
   sendLead({
     topic: CONFIG.TOPIC,
     email: profile.email,
@@ -677,20 +676,20 @@ function openRevealModal(d, justUnlocked){
     <div class="modal-head">
       <div class="grab"></div>
       <button class="close" onclick="closeModal()">×</button>
-      <div class="m-date">✦ 你的本命招財色 ✦</div>
+      <div class="m-date">✦ 你的本命幸運色 ✦</div>
     </div>
     <div class="reveal">
       <div class="big-swatch" style="${swatchStyle(d.hex)}"></div>
       <div class="r-eyebrow">生肖 ${d.zodiac} · 五行屬${d.element}</div>
       <h3>${d.color}</h3>
-      <div class="r-element">這是最旺你的招財主色</div>
+      <div class="r-element">這是最旺你的幸運主色</div>
       <div class="r-desc">${d.desc}</div>
       <div class="r-noble">
         <div class="nb-swatch" style="${swatchStyle(d.nobleHex)}"></div>
         <div class="nb-text">遇到重要場合，加一點 <b>${d.noble}</b> 當貴人色，幫你帶來貴人運與助力。</div>
       </div>
       ${justUnlocked ? `
-        <div class="r-desc" style="border-left-color:#9c7; background:#f3f9ee;">🔓 已解鎖<b>這週</b>的招財穿搭！<br>下週的穿搭，回 LINE 跟「鷹桃貼身小秘書」說一聲，就會把下一週送給你 👉 每週都有新的。</div>
+        <div class="r-desc" style="border-left-color:#9c7; background:#f3f9ee;">🔓 已解鎖<b>這週</b>的幸運穿搭！<br>下週的穿搭，回 LINE 跟「鷹桃貼身小秘書」說一聲，就會把下一週送給你 👉 每週都有新的。</div>
         <button class="submit-btn" onclick="closeModal()">太準了！先看這週穿搭 ✨</button>` : ``}
     </div>`;
   openModal();
@@ -706,17 +705,17 @@ function showJoinPrompt(){
     <div class="modal-head">
       <div class="grab"></div>
       <button class="close" onclick="closeModal()">×</button>
-      <div class="m-date">✦ 招財穿搭曆 ✦</div>
-      <h3>加 LINE 解鎖完整招財曆</h3>
+      <div class="m-date">✦ 幸運穿搭曆 ✦</div>
+      <h3>加 LINE 解鎖完整幸運曆</h3>
     </div>
     <div class="reveal">
       <div class="r-desc" style="border-left-color:#06c755; background:#eefaf0;">
         加入「鷹桃貼身小秘書」就能：<br>
-        ① 免費測你的本命招財色<br>
-        ② 每天看今日招財穿搭<br>
-        ③ 每週領完整一週招財曆
+        ① 免費測你的本命幸運色<br>
+        ② 每天看今日幸運穿搭<br>
+        ③ 每週領完整一週幸運曆
       </div>
-      <button class="submit-btn" style="background:#06c755;" onclick="goToLine()">加入 LINE · 解鎖招財曆 →</button>
+      <button class="submit-btn" style="background:#06c755;" onclick="goToLine()">加入 LINE · 解鎖幸運曆 →</button>
       <div class="form-note" style="margin-top:14px"><a href="#" onclick="closeModal();return false;" style="color:var(--ink-soft);text-decoration:underline;">先看看今天的</a></div>
     </div>`;
   openModal();
