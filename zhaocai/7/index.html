@@ -441,6 +441,12 @@ const monthName = MONTH_CN[monthIdx] + "月";
 let todayN = now.getDate();
 if (todayN > 30) todayN = 30;
 
+/* 用「真實當前年月」算某一天是星期幾，不再讀死值。
+   白話：以前星期是寫死成 6 月的日曆，換月份就會對不上（例如 7/3 其實是週五卻顯示週三）。
+   改成用今天所在的年、月，加上第 d 號，讓瀏覽器算出正確星期，任何月份都準。 */
+const WK_CN = ["週日","週一","週二","週三","週四","週五","週六"];
+function weekdayOf(d){ return WK_CN[new Date(now.getFullYear(), monthIdx, d).getDay()]; }
+
 function cameFromLine(){ return new URLSearchParams(location.search).has("w"); }
 /* 依 6 月日期算「目前第幾週」(每 7 天一週：1-7、8-14、15-21、22-28、29-30；6/1 剛好週一) */
 function currentWeek(){ return Math.ceil(todayN / 7); }
@@ -508,7 +514,7 @@ document.getElementById("eyebrowLabel").textContent = monthName + " · 幸運體
 const t = DATA[todayN - 1];
 document.getElementById("todaySwatch").style.cssText = swatchStyle(t.hex);
 document.getElementById("todayTag").textContent = `${monthIdx+1}/${t.d} 今日推薦`;
-document.getElementById("todayDate").textContent = `${monthIdx+1}月${t.d}日 ${t.wk}`;
+document.getElementById("todayDate").textContent = `${monthIdx+1}月${t.d}日 ${weekdayOf(t.d)}`;
 document.getElementById("todayColor").innerHTML = `幸運主色　<span style="color:var(--gold)">${t.color}</span>`;
 document.getElementById("todayReason").textContent = t.reason;
 document.getElementById("todayCard").addEventListener("click", () => openDayModal(todayN - 1));
@@ -571,7 +577,7 @@ function renderGrid(){
       else { lockLabel = `${monthIdx + 1}/${weekStartDay(item.d)} 開放`; lockAction = () => showWeekInfo(item.d); }
       el.innerHTML = `
         <div class="dnum">${item.d}</div>
-        <div class="wk">${item.wk}</div>
+        <div class="wk">${weekdayOf(item.d)}</div>
         <div class="swatch" style="${swatchStyle(item.hex)}"></div>
         <div class="cname">？？？</div>
         <div class="lock"><span class="ico">🔒</span><span>${lockLabel}</span></div>`;
@@ -580,7 +586,7 @@ function renderGrid(){
       el.innerHTML = `
         ${item.d === todayN ? '<span class="star">★ 今日</span>' : ''}
         <div class="dnum">${item.d}</div>
-        <div class="wk">${item.wk}</div>
+        <div class="wk">${weekdayOf(item.d)}</div>
         <div class="swatch" style="${swatchStyle(item.hex)}"></div>
         <div class="cname">${item.color}</div>`;
       el.addEventListener("click", () => openDayModal(i));
@@ -618,7 +624,7 @@ function openDayModal(i){
     <div class="modal-head">
       <div class="grab"></div>
       <button class="close" onclick="closeModal()">×</button>
-      <div class="m-date">${monthIdx+1}月${x.d}日 · ${x.wk}</div>
+      <div class="m-date">${monthIdx+1}月${x.d}日 · ${weekdayOf(x.d)}</div>
       <div class="m-swatch" style="${swatchStyle(x.hex)}"></div>
       <h3>幸運主色｜${x.color}</h3>
       <div class="match">搭配色：${x.match}</div>
