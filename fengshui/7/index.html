@@ -280,8 +280,20 @@ function render(){
         想要更完整的居家開運建議嗎？加 LINE 輸入<br><span style="font-size:28px; color:#d32f2f; font-weight:900; letter-spacing:2px;">風水指南</span>
       </div>
       <button class="lc-btn" onclick="goToLine()">加入 鷹桃貼身小秘書 →</button>
+    </div>
+    <div style="text-align:center; margin-top:18px;">
+      <button onclick="resetQuiz()" style="border:none; background:none; cursor:pointer; color:var(--ink-soft); font-size:14px; text-decoration:underline; text-underline-offset:3px; letter-spacing:1px;">🔄 幫家人也算一個（換生日重測）</button>
     </div>`;
 }
+
+/* ===== 換生日重測：清掉本機生日，回到生日表單 ===== */
+function resetQuiz(){
+  try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+  profile=null;
+  render();
+  openForm();
+}
+window.resetQuiz=resetQuiz;
 
 /* ===== 生日表單 ===== */
 let formState={ year:"", month:"", day:"", gender:"", email:"" };
